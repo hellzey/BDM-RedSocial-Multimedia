@@ -1,0 +1,70 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    padding-top: 60px;
+}
+
+/* Contenedor principal */
+.follow-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Lista de seguidores */
+.followers-list {
+    list-style: none;
+    padding: 0;
+}
+
+.follower {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #222;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.follower img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.follower-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.follower-name {
+    font-weight: bold;
+}
+
+.follower-handle {
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* Botón de seguir */
+.follow-btn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1DA1F2;
+    color: white;
+    cursor: pointer;
+}
+
+.follow-btn:hover {
+    background-color: #0d8bf0;
+}
