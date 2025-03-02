@@ -13,7 +13,7 @@
     <div class="profile-header">
         <img src="media/griffith.jpg" alt="Foto de perfil" class="profile-img">
         <div class="profile-details">
-            <p class="profile-name">Nombre del Usuario</p>  
+            <p class="profile-name">Nombre  Usuario</p>  
             <p class="profile-handle">@usuario</p>
         </div>
     </div>
