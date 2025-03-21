@@ -10,7 +10,7 @@
     <?php include 'nav.php'; ?>
     
     <div class="mensaje-container">
-        <!-- Panel de chats recientes -->
+        
         <div class="chat-list">
             <h3>Chats Recientes</h3>
             <button class="create-group">+ Crear Grupo</button>
@@ -22,7 +22,7 @@
             </ul>
         </div>
 
-        <!-- Panel del chat -->
+        
         <div class="chat-box">
             <h3>Chat con Usuario 1</h3>
             <div class="messages">

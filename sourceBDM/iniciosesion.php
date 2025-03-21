@@ -10,8 +10,6 @@
     <?php include 'nav.php';  ?>
 
     <div class="container">
-
-        <!-- Formulario de inicio de sesión -->
         <div class="login-container">
             <h3>Accede a tu cuenta</h3>
             <form action="login.php" method="POST">

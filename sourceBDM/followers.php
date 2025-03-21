@@ -21,9 +21,6 @@
                     </div>
                     <button class="follow-btn">Siguiendo</button>
                 </li>
-
-               
-
                 <li class="follower">
                     <img src="media/usuario.png" alt="Usuario 3">
                     <div class="follower-info">

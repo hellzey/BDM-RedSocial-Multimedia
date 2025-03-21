@@ -14,8 +14,6 @@
             <input type="text" placeholder="Nombre de Usuario" required>
             <input type="email" placeholder="Correo Electrónico" required>
             <input type="password" placeholder="Contraseña" required>
-            
-            <!-- Campo de Fecha -->
             <input type="date" id="fecha" name="fecha" required>
             
             <label for="file-upload" class="file-upload-label">Subir Foto de Perfil</label>

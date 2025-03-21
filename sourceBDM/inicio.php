@@ -13,12 +13,11 @@
     
     <div class="container">
         <h2>Publicaciones Recientes</h2>   
-        <!-- Apartado para hacer una publicación -->
+        
 <div class="new-post-container">
     <h3>Hacer una nueva publicación</h3>
     <form>
         <textarea placeholder="¿Qué estás pensando?" rows="4"></textarea>
-        <!-- Campo de archivo con etiqueta personalizada -->
         <input type="file" id="file-upload" accept="image/*,video/*">
         <label for="file-upload" class="file-upload-label">archivo</label>
         <button type="submit">Publicar</button>
@@ -35,8 +34,6 @@
         </div>
     </div>
     <p>there’s not enough 🗣️🗣️🗣️</p>
-
-    <!-- Contenedor de imágenes y videos -->
     <div class="post-media">
         <img src="media/griffith3.jpg" alt="Imagen 1" class="media-item">
         <img src="media/Griffith2.jpg" alt="Imagen 2" class="media-item">

@@ -11,11 +11,11 @@
 <?php include 'nav.php'; ?>
 
 <?php
-// Simulación de datos del usuario (esto vendría de la base de datos)
+
 $usuario = "MiUsuario";
 $email = "usuario@example.com";
 $fecha_nacimiento = "2000-01-01";
-$imagen_perfil = "img/default.png"; // Ruta de la imagen de perfil por defecto
+$imagen_perfil = "media/griffith.jpg"; 
 ?>
 
 <div class="profile-container">
@@ -25,12 +25,12 @@ $imagen_perfil = "img/default.png"; // Ruta de la imagen de perfil por defecto
         <input type="email" name="email" value="<?php echo $email; ?>" required>
         <input type="date" name="fecha" value="<?php echo $fecha_nacimiento; ?>" required>
         
-        <!-- Vista previa de la imagen -->
+        
         <div class="profile-pic-container">
             <img id="profile-pic" src="<?php echo $imagen_perfil; ?>" alt="Foto de perfil">
         </div>
         
-        <!-- Subir nueva foto -->
+        
         <label for="file-upload" class="file-upload-label">Cambiar Foto de Perfil</label>
         <input type="file" id="file-upload" name="foto_perfil" accept="image/*" style="display: none;">
         
@@ -39,7 +39,7 @@ $imagen_perfil = "img/default.png"; // Ruta de la imagen de perfil por defecto
 </div>
 
 <script>
-    // Mostrar vista previa de la imagen seleccionada
+    
     document.getElementById("file-upload").addEventListener("change", function(event) {
         let file = event.target.files[0];
         if (file) {

@@ -18,8 +18,6 @@
         </div>
     </div>
     <p class="profile-bio">Esta es la biografía del usuario. Aquí puede escribir algo sobre sí mismo.</p>
-
-<!-- Contador de seguidores -->
 <p class="followers-count">
     <a href="followers.php">13 Seguidores</a>
     <br>
@@ -28,9 +26,6 @@
 
 
 </div>
-
-
-
         <div class="new-post-container">
     <h3>Hacer una nueva publicación</h3>
     <form>

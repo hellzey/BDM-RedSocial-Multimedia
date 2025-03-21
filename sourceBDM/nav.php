@@ -9,7 +9,7 @@
     <a href="registro.php">Registrarse</a>
     <a href="Mensajes.php">Mensajes</a>
 
-    <!-- Apartado de búsqueda -->
+    
     <form action="ReBusqueda.php" method="get" class="search-form">
         <input type="text" name="q" placeholder="Buscar..." class="search-input">
         <button type="submit" class="search-btn">Buscar</button>
