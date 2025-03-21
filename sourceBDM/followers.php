@@ -25,10 +25,10 @@
                
 
                 <li class="follower">
-                    <img src="media/usuario.png" alt="Usuario 2">
+                    <img src="media/usuario.png" alt="Usuario 3">
                     <div class="follower-info">
-                        <p class="follower-name">Usuario 2</p>
-                        <p class="follower-handle">@usuario2</p>
+                        <p class="follower-name">Usuario 3</p>
+                        <p class="follower-handle">@usuario3</p>
                     </div>
                     <button class="follow-btn">Siguiendo</button>
                 </li>

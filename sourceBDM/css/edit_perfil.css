@@ -1,0 +1,76 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    padding-top: 60px;
+}
+
+/* Contenedor del perfil */
+.profile-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Campos del formulario */
+.profile-container input[type="email"],
+.profile-container input[type="text"],
+.profile-container input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #000;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+/* Imagen de perfil */
+.profile-pic-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid #555;
+}
+
+/* Botón de carga de archivos */
+.file-upload-label {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.file-upload-label:hover {
+    background-color: #777;
+}
+
+/* Botón de actualización */
+.profile-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+}
+
+.profile-container button:hover {
+    background-color: #777;
+}

@@ -13,7 +13,7 @@
     <div class="profile-header">
         <img src="media/griffith.jpg" alt="Foto de perfil" class="profile-img">
         <div class="profile-details">
-            <p class="profile-name">Nombre  Usuario</p>  
+            <p class="profile-name">Nombre del Usuario</p>  
             <p class="profile-handle">@usuario</p>
         </div>
     </div>
@@ -22,6 +22,8 @@
 <!-- Contador de seguidores -->
 <p class="followers-count">
     <a href="followers.php">13 Seguidores</a>
+    <br>
+    <a href="edit_perfil.php">editar perfil</a>
 </p>
 
 

@@ -26,23 +26,27 @@
 </div>
         <div class="post-container">
         <div class="post">
-                <div class="user-info">
-                    <div class="user-avatar">
-                        <img src="media/usuario.png" alt="Avatar de 21 tremboy" class="avatar-img">
-                    </div>
-                    <div class="user-details">
-                        <p><span class="username">21 tremboy</span> <span class="handle">@tremboy_</span> · <span class="time">2m</span></p>
-                    </div>
-                </div>
-                <p>there’s not enough 🗣️🗣️🗣️</p>
+    <div class="user-info">
+        <div class="user-avatar">
+            <img src="media/usuario.png" alt="Avatar de 21 tremboy" class="avatar-img">
+        </div>
+        <div class="user-details">
+            <p><span class="username">21 tremboy</span> <span class="handle">@tremboy_</span> · <span class="time">2m</span></p>
+        </div>
+    </div>
+    <p>there’s not enough 🗣️🗣️🗣️</p>
 
-                <!-- Aquí se mostrarán las imágenes -->
-                <div class="post-images">
-                    <img src="media/griffith3.jpg" alt="Imagen 1">
-                    <img src="media/Griffith2.jpg" alt="Imagen 2">
-                    <img src="media/griffith.jpg" alt="Imagen 3">
-                </div>
-            </div>
+    <!-- Contenedor de imágenes y videos -->
+    <div class="post-media">
+        <img src="media/griffith3.jpg" alt="Imagen 1" class="media-item">
+        <img src="media/Griffith2.jpg" alt="Imagen 2" class="media-item">
+        <video class="media-item" controls>
+            <source src="media/koro.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+        </video>
+    </div>
+</div>
+
             <div class="post">
                 <div class="user-info">
                     <div class="user-avatar">
@@ -52,7 +56,7 @@
                         <p><span class="username">cath</span> <span class="handle">@knra03</span> · <span class="time">6h</span></p>
                     </div>
                 </div>
-                <p>My body is a machine that turns water into pee</p>
+                <p>My body is a machine that turns water into pee  #foryou</p>
             </div>
             <div class="post">
                 <div class="user-info">
@@ -87,35 +91,46 @@
 
 
 
-
-
-    <!-- Modal para vista previa de imágenes -->
-<div id="imageModal" class="modal">
+<!-- Modal para vista previa de imágenes y videos -->
+<div id="mediaModal" class="modal">
     <span class="close">&times;</span>
     <img class="modal-content" id="modalImage">
+    <video class="modal-content" id="modalVideo" controls></video>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("imageModal");
+        const modal = document.getElementById("mediaModal");
         const modalImg = document.getElementById("modalImage");
+        const modalVideo = document.getElementById("modalVideo");
         const closeBtn = document.querySelector(".close");
 
-        // Evento para abrir la imagen en el modal
-        document.querySelectorAll(".post-images img").forEach(img => {
-            img.addEventListener("click", function () {
+        document.querySelectorAll(".media-item").forEach(media => {
+            media.addEventListener("click", function () {
                 modal.style.display = "flex";
-                modalImg.src = this.src;
+
+                if (this.tagName === "IMG") {
+                    modalImg.src = this.src;
+                    modalImg.style.display = "block";
+                    modalVideo.style.display = "none";
+                } else if (this.tagName === "VIDEO") {
+                    modalVideo.src = this.querySelector("source").src;
+                    modalVideo.style.display = "block";
+                    modalImg.style.display = "none";
+                }
             });
         });
 
-        // Cerrar el modal al hacer clic en la "X" o fuera de la imagen
-        closeBtn.addEventListener("click", () => modal.style.display = "none");
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+            modalVideo.pause(); // Pausar el video al cerrar el modal
+        });
+
         modal.addEventListener("click", (e) => {
-            if (e.target === modal) modal.style.display = "none";
+            if (e.target === modal) {
+                modal.style.display = "none";
+                modalVideo.pause();
+            }
         });
     });
 </script>
-
-</body>
-</html>

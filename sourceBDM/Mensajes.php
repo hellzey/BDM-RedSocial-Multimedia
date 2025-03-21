@@ -13,6 +13,7 @@
         <!-- Panel de chats recientes -->
         <div class="chat-list">
             <h3>Chats Recientes</h3>
+            <button class="create-group">+ Crear Grupo</button>
             <ul>
                 <li class="chat-item">Usuario 1</li>
                 <li class="chat-item">Usuario 2</li>
@@ -25,9 +26,21 @@
         <div class="chat-box">
             <h3>Chat con Usuario 1</h3>
             <div class="messages">
-                <p class="message received">Hola, ¿cómo estás?</p>
-                <p class="message sent">¡Bien! ¿Y tú?</p>
-                <p class="message received">Todo bien, gracias.</p>
+                <p class="message received">
+                    <span class="user">Usuario 1</span> 
+                    <span class="timestamp">10:30 AM</span>
+                    <br>Hola, ¿cómo estás?
+                </p>
+                <p class="message sent">
+                    <span class="user">Tú</span> 
+                    <span class="timestamp">10:31 AM</span>
+                    <br>¡Bien! ¿Y tú?
+                </p>
+                <p class="message received">
+                    <span class="user">Usuario 1</span> 
+                    <span class="timestamp">10:32 AM</span>
+                    <br>Todo bien, gracias.
+                </p>
             </div>
             <div class="chat-input">
                 <input type="text" placeholder="Escribe un mensaje...">
