@@ -9,7 +9,7 @@
 </head>
 <body> 
 
-    <?php include 'nav.php';  ?>
+    <?php include '../sourceBDM/nav.php';  ?>
     
     <div class="container">
         <h2>Publicaciones Recientes</h2>   
