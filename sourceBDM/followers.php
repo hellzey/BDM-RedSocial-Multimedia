@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/followers.css">
 </head>
 <body> 
-    <?php include '../sourceBDM/nav.php';  ?>
+    <?php include 'nav.php';  ?>
 
     <div class="container">
         <div class="follow-container">
