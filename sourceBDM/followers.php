@@ -25,7 +25,7 @@
                
 
                 <li class="follower">
-                    <img src="media/usuario.png" alt="Usuario 3">
+                    <img src="media/usuario.png" alt="Usuario 2">
                     <div class="follower-info">
                         <p class="follower-name">Usuario 2</p>
                         <p class="follower-handle">@usuario2</p>
