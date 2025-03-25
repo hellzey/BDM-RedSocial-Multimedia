@@ -1,117 +1,89 @@
-/*----------------------------------------
-    RESET Y CONFIGURACIÓN GENERAL
-----------------------------------------*/
+/* Fuente minimalista */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
+    background-color: black;
     margin: 0;
-    padding: 0;
-    background-color: #000; /* Fondo negro */
-    color: #fff; /* Texto blanco */
-    padding-top: 60px; /* Ajusta este valor según la altura de tu nav */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #ffffff;
+    background-image: url('../media/logoatlus.png');
+    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen en el fondo */
 }
 
-/*----------------------------------------
-    ENCABEZADO (HEADER)
-----------------------------------------*/
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
+.container {
+    background-color: rgba(30, 30, 30, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 360px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow-y: auto;
+    max-height: 90vh;
+    backdrop-filter: blur(20px) brightness(1.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
     text-align: center;
+    font-size: 1.8em;
     margin-bottom: 10px;
+    color: #ffffff;
 }
 
-h2 {
-    text-align: center;
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #cccccc;
+    font-size: 0.9em;
 }
 
-/*----------------------------------------
-    FORMULARIO DE REGISTRO
-----------------------------------------*/
-.register-container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #1A1A1A;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-}
-
-.register-container h3 {
+input,
+select {
+    width: 100%;
+    padding: 8px;
     margin-bottom: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: rgba(38, 38, 38, 0.7);
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
-.register-container input[type="email"],
-.register-container input[type="password"],
-.register-container input[type="text"],
-.register-container input[type="date"],
-.register-container input[type="file"] {
-    width: calc(100% - 20px);
+input:focus,
+select:focus {
+    border-color: #00c896;
+}
+
+button {
+    width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #333;
-    background-color: #000;
-    color: #fff;
-    box-sizing: border-box;
-}
-
-/*----------------------------------------
-    PERSONALIZACIÓN DEL CAMPO DE FECHA
-----------------------------------------*/
-.register-container input[type="date"] {
-    -webkit-appearance: none;  /* Oculta los controles predeterminados */
-    -moz-appearance: none;
-    appearance: none;
-    padding: 10px;
-    background-color: #000;
-    border: 1px solid #333;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.register-container input[type="date"]::-webkit-calendar-picker-indicator {
-    background-color: #333;
-    border-radius: 5px;
-    padding: 3px;
-}
-
-/*----------------------------------------
-    BOTÓN Y CARGA DE ARCHIVOS
-----------------------------------------*/
-.register-container button {
-    padding: 10px 20px;
+    background-color: #00c896;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
-    background-color: #555;
-    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.register-container button:hover {
-    background-color: #777;
+button:hover {
+    background-color: #009f75;
 }
 
-/*----------------------------------------
-    ESTILOS DE CARGA DE ARCHIVOS
-----------------------------------------*/
-.register-container .file-upload-label {
-    background-color: #555;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.register-container .file-upload-label:hover {
-    background-color: #777;
+.radio-group label {
+    margin-right: 10px;
+    font-weight: normal;
+    color: #cccccc;
+    font-size: 0.9em;
 }
