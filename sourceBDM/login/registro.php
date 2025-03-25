@@ -46,6 +46,7 @@
             </div>
             <!-- Botón de envío -->
             <button type="submit">Registrarse</button>
+            <br>
             <button onclick="location.href='iniciosesion.php'">Ya tengo una cuenta</button>
         </form>
     </div>
