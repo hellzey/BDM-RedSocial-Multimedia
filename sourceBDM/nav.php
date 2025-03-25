@@ -5,8 +5,8 @@
     </a>
     <a href="inicio.php">Inicio</a>
     <a href="perfil.php">Perfil</a>
-    <a href="iniciosesion.php">Iniciar Sesion</a>
-    <a href="registro.php">Registrarse</a>
+    <a href="../login/iniciosesion.php">Iniciar Sesion</a>
+    <a href="../login/registro.php">Registrarse</a>
     <a href="Mensajes.php">Mensajes</a>
 
     
