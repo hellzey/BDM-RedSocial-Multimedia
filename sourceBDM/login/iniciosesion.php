@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="../css/iniciosesion.css">
 </head>
 <body> 
-    <?php include '../content/nav.php';  ?>
-
     <div class="container">
         <div class="login-container">
             <h3>Accede a tu cuenta</h3>
@@ -16,10 +14,9 @@
                 <input type="email" name="email" placeholder="Correo electrónico" required>
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar sesión</button>
+                <button onclick="location.href='registro.php'">Crear cuenta nueva</button>
             </form>
         </div>
     </div>
-
-    
 </body>
 </html>
