@@ -39,8 +39,10 @@
                 <option value="femenino">Femenino</option>
             </select>
              <!-- Foto de perfil -->
+            <div class="foto-container">
             <label for="file-upload" class="file-upload-label">Subir Foto de Perfil</label>
             <input type="file" id="file-upload" accept="image/*" style="display: none;">
+            </div>
             <div id="preview-container" style="display: none;">
                 <img id="preview-image" src="" alt="Previsualización" style="width: 100%; margin-top: 10px; border-radius: 5px;">
             </div>
