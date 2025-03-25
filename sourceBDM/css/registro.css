@@ -66,6 +66,7 @@ select:focus {
 button {
     width: 100%;
     padding: 10px;
+    margin-top: 15px;
     background-color: #178bcd;
     color: #ffffff;
     border: none;
@@ -103,7 +104,6 @@ button:hover {
 }
 
 .file-upload-label{
-    margin-top: 15px;
     cursor: pointer;
     text-decoration: underline;
 }
