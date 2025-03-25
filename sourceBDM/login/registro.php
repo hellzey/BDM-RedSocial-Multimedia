@@ -38,11 +38,15 @@
                 <option value="masculino">Masculino</option>
                 <option value="femenino">Femenino</option>
             </select>
-            <!-- Foto de perfil -->
+             <!-- Foto de perfil -->
             <label for="file-upload" class="file-upload-label">Subir Foto de Perfil</label>
             <input type="file" id="file-upload" accept="image/*" style="display: none;">
+            <div id="preview-container" style="display: none;">
+                <img id="preview-image" src="" alt="Previsualización" style="width: 100%; margin-top: 10px; border-radius: 5px;">
+            </div>
             <!-- Botón de envío -->
             <button type="submit">Registrarse</button>
+            <button onclick="location.href='iniciosesion.php'">Ya tengo una cuenta</button>
         </form>
     </div>
 

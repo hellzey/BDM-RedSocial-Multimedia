@@ -10,6 +10,7 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
     let password = document.getElementById("password").value.trim();
     let email = document.getElementById("email").value.trim();
     let genero = document.getElementById("genero").value;
+    let fileUpload = document.getElementById("file-upload").files[0];
 
     // Validar cada campo
     if (nombre === "") {
@@ -44,8 +45,31 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
         alert("Por favor, selecciona un genero.");
         return;
     }
+    if (!fileUpload) {
+        alert("Por favor, selecciona una foto de perfil.");
+        return;
+    }
+
     //Se confirma el envío
     if (confirm("¿Estás seguro de que deseas enviar el formulario?")) {
         alert("Formulario enviado correctamente.");
+    }
+});
+
+// Previsualización de imagen
+document.getElementById("file-upload").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const previewImage = document.getElementById("preview-image");
+            const previewContainer = document.getElementById("preview-container");
+            previewImage.src = e.target.result;
+            previewContainer.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    } else {
+        alert("Por favor, selecciona un archivo de imagen válido.");
+        document.getElementById("file-upload").value = ""; // Limpiar el campo de archivo
     }
 });
