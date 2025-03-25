@@ -66,7 +66,7 @@ select:focus {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #00c896;
+    background-color: #178bcd;
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -77,7 +77,7 @@ button {
 }
 
 button:hover {
-    background-color: #009f75;
+    background-color: #126797;
 }
 
 .radio-group label {
