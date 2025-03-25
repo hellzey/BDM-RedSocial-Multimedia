@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="../css/nav.css">
 <nav>
     <a href="inicio.php">
-        <img src="media/logoatlus.png" alt="Logo" class="logo">
+        <img src="../media/logoatlus.png" alt="Logo" class="logo">
     </a>
     <a href="inicio.php">Inicio</a>
     <a href="perfil.php">Perfil</a>
