@@ -103,6 +103,7 @@ button:hover {
 }
 
 .file-upload-label{
+    margin-top: 15px;
     cursor: pointer;
     text-decoration: underline;
 }
