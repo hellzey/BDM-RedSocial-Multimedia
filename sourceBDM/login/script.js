@@ -56,7 +56,7 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
     }
 });
 
-// Previsualización de imagen
+// Previsualización de la foto de perfil
 document.getElementById("file-upload").addEventListener("change", function(event) {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -72,4 +72,8 @@ document.getElementById("file-upload").addEventListener("change", function(event
         alert("Por favor, selecciona un archivo de imagen válido.");
         document.getElementById("file-upload").value = ""; // Limpiar el campo de archivo
     }
+});
+
+document.getElementById("iniciosesion-label").addEventListener("click", function () {
+    location.href = 'iniciosesion.php'; // Redirige al inicio de sesión
 });
