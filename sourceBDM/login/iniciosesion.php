@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/iniciosesion.css">
 </head>
 <body> 
-    <?php include 'nav.php';  ?>
+    <?php include '../content/nav.php';  ?>
 
     <div class="container">
         <div class="login-container">

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/registro.css">
 </head>
 <body>
-<?php include 'nav.php';  ?>
+<?php include '../content/nav.php';  ?>
     <div class="register-container">
         <h2>Registro de Usuario</h2>
         <form>
