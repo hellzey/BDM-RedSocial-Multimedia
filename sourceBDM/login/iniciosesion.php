@@ -17,11 +17,14 @@
                 <div class="link-container">
                     <label for="registro" id="registro-label">Crear cuenta nueva</label>
                 </div>
+                <script>
+                    document.getElementById("registro-label").addEventListener("click", function () {
+                    location.href = 'registro.php'; // Redirige al registro de usuario
+                    });
+                </script>
             </form>
         </div>
     </div>
 
-    <script src="script.js"></script>
-    
 </body>
 </html>
