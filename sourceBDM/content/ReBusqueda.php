@@ -15,7 +15,7 @@
             <div class="post">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <img src="media/usuario.png" alt="Avatar de 21 tremboy" class="avatar-img">
+                        <img src="../media/usuario.png" alt="Avatar de 21 tremboy" class="avatar-img">
                     </div>
                     <div class="user-details">
                         <p><span class="username">21 tremboy</span> <span class="handle">@tremboy_</span> · <span class="time">2m</span></p>
@@ -26,7 +26,7 @@
             <div class="post">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <img src="media/usuario.png" alt="Avatar de cath" class="avatar-img">
+                        <img src="../media/usuario.png" alt="Avatar de cath" class="avatar-img">
                     </div>
                     <div class="user-details">
                         <p><span class="username">cath</span> <span class="handle">@knra03</span> · <span class="time">6h</span></p>

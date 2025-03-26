@@ -11,7 +11,7 @@
     <?php include 'nav.php'; ?>
     <div class="profile-container">
     <div class="profile-header">
-        <img src="media/griffith.jpg" alt="Foto de perfil" class="profile-img">
+        <img src="../media/griffith.jpg" alt="Foto de perfil" class="profile-img">
         <div class="profile-details">
             <p class="profile-name">Nombre del Usuario</p>  
             <p class="profile-handle">@usuario</p>

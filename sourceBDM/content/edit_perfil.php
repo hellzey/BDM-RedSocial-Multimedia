@@ -15,7 +15,7 @@
 $usuario = "MiUsuario";
 $email = "usuario@example.com";
 $fecha_nacimiento = "2000-01-01";
-$imagen_perfil = "media/griffith.jpg"; 
+$imagen_perfil = "../media/griffith.jpg"; 
 ?>
 
 <div class="profile-container">

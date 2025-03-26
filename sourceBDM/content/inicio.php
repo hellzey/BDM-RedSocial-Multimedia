@@ -27,7 +27,7 @@
         <div class="post">
     <div class="user-info">
         <div class="user-avatar">
-            <img src="media/usuario.png" alt="Avatar de 21 tremboy" class="avatar-img">
+            <img src="../media/usuario.png" alt="Avatar de 21 tremboy" class="avatar-img">
         </div>
         <div class="user-details">
             <p><span class="username">21 tremboy</span> <span class="handle">@tremboy_</span> · <span class="time">2m</span></p>
@@ -35,10 +35,10 @@
     </div>
     <p>there’s not enough 🗣️🗣️🗣️</p>
     <div class="post-media">
-        <img src="media/griffith3.jpg" alt="Imagen 1" class="media-item">
-        <img src="media/Griffith2.jpg" alt="Imagen 2" class="media-item">
+        <img src="../media/griffith3.jpg" alt="Imagen 1" class="media-item">
+        <img src="../media/Griffith2.jpg" alt="Imagen 2" class="media-item">
         <video class="media-item" controls>
-            <source src="media/koro.mp4" type="video/mp4">
+            <source src="../media/koro.mp4" type="video/mp4">
             Tu navegador no soporta la reproducción de video.
         </video>
     </div>
@@ -47,7 +47,7 @@
             <div class="post">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <img src="media/usuario.png" alt="Avatar de cath" class="avatar-img">
+                        <img src="../media/usuario.png" alt="Avatar de cath" class="avatar-img">
                     </div>
                     <div class="user-details">
                         <p><span class="username">cath</span> <span class="handle">@knra03</span> · <span class="time">6h</span></p>
@@ -58,7 +58,7 @@
             <div class="post">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <img src="media/usuario.png" alt="Avatar de lu" class="avatar-img">
+                        <img src="../media/usuario.png" alt="Avatar de lu" class="avatar-img">
                     </div>
                     <div class="user-details">
                         <p><span class="username">lu</span> <span class="handle">@luna07</span> · <span class="time">1h</span></p>
@@ -69,7 +69,7 @@
             <div class="post">
                 <div class="user-info">
                     <div class="user-avatar">
-                        <img src="media/usuario.png" alt="Avatar de marco" class="avatar-img">
+                        <img src="../media/usuario.png" alt="Avatar de marco" class="avatar-img">
                     </div>
                     <div class="user-details">
                         <p><span class="username">marco</span> <span class="handle">@marco99</span> · <span class="time">3h</span></p>

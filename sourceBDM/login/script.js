@@ -77,3 +77,7 @@ document.getElementById("file-upload").addEventListener("change", function(event
 document.getElementById("iniciosesion-label").addEventListener("click", function () {
     location.href = 'iniciosesion.php'; // Redirige al inicio de sesión
 });
+
+document.getElementById("registro-label").addEventListener("click", function () {
+    location.href = 'registro.php'; // Redirige al registro de usuario
+});

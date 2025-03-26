@@ -14,7 +14,9 @@
                 <input type="email" name="email" placeholder="Nombre de Usuario o Correo electrónico" required>
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar sesión</button>
-                <button onclick="location.href='registro.php'">Crear cuenta nueva</button>
+                <div class="link-container">
+                    <label for="registro" id="registro-label">Crear cuenta nueva</label>
+                </div>
             </form>
         </div>
     </div>

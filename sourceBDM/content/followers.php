@@ -14,7 +14,7 @@
             <h3>Seguidores</h3>
             <ul class="followers-list">
                 <li class="follower">
-                    <img src="media/usuario.png" alt="Usuario 1">
+                    <img src="../media/usuario.png" alt="Usuario 1">
                     <div class="follower-info">
                         <p class="follower-name">Usuario 1</p>
                         <p class="follower-handle">@usuario1</p>
@@ -22,7 +22,7 @@
                     <button class="follow-btn">Siguiendo</button>
                 </li>
                 <li class="follower">
-                    <img src="media/usuario.png" alt="Usuario 3">
+                    <img src="../media/usuario.png" alt="Usuario 3">
                     <div class="follower-info">
                         <p class="follower-name">Usuario 3</p>
                         <p class="follower-handle">@usuario3</p>
