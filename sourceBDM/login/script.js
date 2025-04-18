@@ -80,3 +80,8 @@ document.getElementById("file-upload").addEventListener("change", function(event
 document.getElementById("iniciosesion-label").addEventListener("click", function () {
     location.href = 'iniciosesion.php';
 });
+
+
+document.getElementById("inicio-label").addEventListener("click", function () {
+    location.href = '../content/inicio.php';
+});

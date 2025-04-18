@@ -84,3 +84,16 @@ button:hover {
 #registro-label:hover {
     color: #126797;
 }
+
+
+
+#inicio-label {
+    color: #178bcd;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#inicio-label:hover {
+    color: #126797;
+}

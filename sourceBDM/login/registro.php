@@ -52,6 +52,9 @@
             <div class="link-container">
                 <label for="iniciosesion" id="iniciosesion-label">Ya tengo una cuenta</label>
             </div>
+            <div class="link-container">
+                <label for="inicio" id="inicio-label">Pag inicio</label>
+            </div>
         </form>
     </div>
 
