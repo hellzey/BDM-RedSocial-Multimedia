@@ -74,3 +74,14 @@ body {
 .profile-container button:hover {
     background-color: #777;
 }
+.profile-container textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #000;
+    color: #fff;
+    resize: vertical; /* permite al usuario ajustar el tamaño vertical */
+    box-sizing: border-box;
+}
