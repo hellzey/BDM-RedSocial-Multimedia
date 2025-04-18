@@ -3,8 +3,8 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
 
     // Validar campos
     let nombre = document.getElementById("nombre").value.trim();
-    let apellidoPaterno = document.getElementById("apellidoPaterno").value.trim();
-    let apellidoMaterno = document.getElementById("apellidoMaterno").value.trim();
+    let apellidoPaterno = document.getElementById("apellidoPaterno")?.value.trim(); // <- Esto no está en tu HTML actual
+    let apellidoMaterno = document.getElementById("apellidoMaterno")?.value.trim(); // <- Esto tampoco
     let fechaNacimiento = document.getElementById("fechaNacimiento").value;
     let nombreUsuario = document.getElementById("nombreUsuario").value.trim();
     let password = document.getElementById("password").value.trim();
@@ -17,11 +17,12 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
         alert("Por favor, ingresa tu nombre o nombres.");
         return;
     }
-    if (apellidoPaterno === "") {
+    // Solo validar si esos campos existen en tu HTML
+    if (apellidoPaterno !== undefined && apellidoPaterno === "") {
         alert("Por favor, ingresa tu apellido paterno.");
         return;
     }
-    if (apellidoMaterno === "") {
+    if (apellidoMaterno !== undefined && apellidoMaterno === "") {
         alert("Por favor, ingresa tu apellido materno.");
         return;
     }
@@ -42,7 +43,7 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
         return;
     }
     if (genero === "") {
-        alert("Por favor, selecciona un genero.");
+        alert("Por favor, selecciona un género.");
         return;
     }
     if (!fileUpload) {
@@ -50,9 +51,10 @@ document.getElementById("registroForm").addEventListener("submit", function (eve
         return;
     }
 
-    //Se confirma el envío
+    // Confirmar envío y proceder
     if (confirm("¿Estás seguro de que deseas enviar el formulario?")) {
         alert("Formulario enviado correctamente.");
+        document.getElementById("registroForm").submit(); // Aquí sí se envía
     }
 });
 
@@ -74,6 +76,7 @@ document.getElementById("file-upload").addEventListener("change", function(event
     }
 });
 
+// Ir a inicio de sesión
 document.getElementById("iniciosesion-label").addEventListener("click", function () {
-    location.href = 'iniciosesion.php'; // Redirige al inicio de sesión
+    location.href = 'iniciosesion.php';
 });
