@@ -383,3 +383,276 @@ p a:active {
   color: white;
   text-decoration: none;
 }
+
+
+
+/*----------------------------------------
+    ACCIONES DE PUBLICACIÓN (LIKE Y COMENTARIOS)
+----------------------------------------*/
+.post-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.action-btn:hover {
+    background-color: #333;
+}
+
+.like-btn, .comment-btn {
+    display: inline-flex;
+    align-items: center;
+}
+
+.likes-counter {
+    margin-left: 5px;
+    color: #888;
+}
+
+/*----------------------------------------
+    SECCIÓN DE COMENTARIOS
+----------------------------------------*/
+.comments-section {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #252525;
+    border-radius: 8px;
+}
+
+.comments-list {
+    margin-bottom: 15px;
+}
+
+.comment {
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-username {
+    font-weight: bold;
+    color: #fff;
+}
+
+.comment-text {
+    color: #ddd;
+}
+
+.no-comments {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Formulario de comentarios */
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.comment-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    background-color: #1A1A1A;
+    color: #fff;
+}
+
+.comment-form button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.comment-form button:hover {
+    background-color: #555;
+}
+
+/* Mejora para el contenido del post */
+.post-content {
+    margin: 10px 0;
+}
+
+.post-content p {
+    margin-top: 0;
+    line-height: 1.4;
+}
+
+/* Mensaje cuando no hay publicaciones */
+.no-posts {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+/*----------------------------------------
+    ACCIONES DE PUBLICACIÓN (LIKE Y COMENTARIOS)
+----------------------------------------*/
+.post-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.action-btn:hover {
+    background-color: #333;
+}
+
+.like-btn, .comment-btn {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Estilo para cuando el usuario ya dio like */
+.like-btn.liked {
+    color: #ff3366;
+}
+
+.likes-counter {
+    margin-left: 5px;
+    color: #888;
+}
+
+/*----------------------------------------
+    SECCIÓN DE COMENTARIOS
+----------------------------------------*/
+.comments-section {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #252525;
+    border-radius: 8px;
+}
+
+.comments-list {
+    margin-bottom: 15px;
+}
+
+.comment {
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-username {
+    font-weight: bold;
+    color: #fff;
+}
+
+.comment-text {
+    color: #ddd;
+}
+
+.no-comments {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Formulario de comentarios */
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.comment-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    background-color: #1A1A1A;
+    color: #fff;
+}
+
+.comment-form button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.comment-form button:hover {
+    background-color: #555;
+}
+
+/* Animación para el botón de like */
+@keyframes likeAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.like-btn.liked:active {
+    animation: likeAnimation 0.3s ease;
+}
+
+.like-btn.liked {
+    color: #e74c3c;
+}
+
+.like-btn:hover {
+    opacity: 0.8;
+}
+
+.action-btn {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #3d3d3d;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

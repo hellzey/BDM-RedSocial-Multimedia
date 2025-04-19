@@ -50,7 +50,8 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <meta charset="UTF-8">
     <title>Perfil de Usuario</title>
     <link rel="stylesheet" href="../css/perfil.css">
-    <script src="../js/verpubli.js"></script>
+    <script src="../script/coment.js"></script>
+    <script src="../script/like.js"></script>
 </head>
 <body>
 <?php include 'nav.php'; ?>
@@ -129,77 +130,128 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     });
 </script>
 
-<!-- Mostrar publicaciones -->
+<<!-- Mostrar publicaciones -->
 <h2>Publicaciones del Usuario</h2>
 <div class="post-container">
-    <?php
-    foreach ($publicaciones as $publi) {
-        echo "<div class='post'>";
-        echo "<div class='user-info'>";
-        echo "<div class='user-avatar'>";
-        echo "<img src='" . $foto . "' alt='Avatar de " . htmlspecialchars($nombre) . "' class='avatar-img'>";
-        echo "</div>";
-        echo "<div class='user-details'>";
-        echo "<p><span class='username'>" . htmlspecialchars($nombre) . "</span> <span class='handle'>@" . htmlspecialchars($nick) . "</span> · <span class='time'>" . $publi['fechacreacion'] . "</span></p>";
-        echo "</div></div>";
+<?php
+foreach ($publicaciones as $publi) {
+    $publiID = $publi['publiID'];
 
-        echo "<p>" . htmlspecialchars($publi['descripcion']) . "</p>";
+    // Verificar si el usuario actual ya dio like
+    $sqlUserLike = "SELECT 1 FROM Reacciones WHERE publiID = $publiID AND usuarioID = $idUsuario AND tipo = 1";
+    $resUserLike = $conn->query($sqlUserLike);
+    $userLiked = ($resUserLike && $resUserLike->num_rows > 0);
 
-        if (!empty($publi['multimedia'])) {
-            echo "<div class='post-media'>";
-            foreach ($publi['multimedia'] as $media) {
-                $archivo = base64_encode($media['archivo']);
-                if ($media['tipo'] === 'imagen') {
-                    echo "<img src='data:image/jpeg;base64,{$archivo}' alt='Imagen de publicación' class='media-item'>";
-                } elseif ($media['tipo'] === 'video') {
-                    echo "<video controls class='media-item'><source src='data:video/mp4;base64,{$archivo}' type='video/mp4'></video>";
-                }
+    // Contador de "Me gusta"
+    $sqlLikes = "SELECT COUNT(*) as total FROM Reacciones WHERE publiID = $publiID AND tipo = 1";
+    $likesRes = $conn->query($sqlLikes);
+    $likes = $likesRes->fetch_assoc()['total'] ?? 0;
+
+    echo "<div class='post'>";
+    echo "<div class='user-info'>";
+    echo "<div class='user-avatar'>";
+    echo "<img src='" . $foto . "' alt='Avatar de " . htmlspecialchars($nombre) . "' class='avatar-img'>";
+    echo "</div>";
+    echo "<div class='user-details'>";
+    echo "<p><span class='username'>" . htmlspecialchars($nombre) . "</span> <span class='handle'>@" . htmlspecialchars($nick) . "</span> · <span class='time'>" . $publi['fechacreacion'] . "</span></p>";
+    echo "</div></div>";
+
+    echo "<p>" . htmlspecialchars($publi['descripcion']) . "</p>";
+
+    if (!empty($publi['multimedia'])) {
+        echo "<div class='post-media'>";
+        foreach ($publi['multimedia'] as $media) {
+            $archivo = base64_encode($media['archivo']);
+            if ($media['tipo'] === 'imagen') {
+                echo "<img src='data:image/jpeg;base64,{$archivo}' alt='Imagen de publicación' class='media-item'>";
+            } elseif ($media['tipo'] === 'video') {
+                echo "<video controls class='media-item'><source src='data:video/mp4;base64,{$archivo}' type='video/mp4'></video>";
             }
-            echo "</div>";
         }
-
         echo "</div>";
     }
-    ?>
+
+    // Sección de acciones
+    echo '<div class="post-actions">';
+    $likedClass = $userLiked ? 'liked' : '';
+    echo '<button id="like-btn-' . $publiID . '" class="action-btn like-btn ' . $likedClass . '" onclick="toggleLike(' . $publiID . ')">❤️ <span id="like-count-' . $publiID . '">' . $likes . '</span></button>';
+
+    echo '<button class="action-btn comment-btn" onclick="mostrarComentarios(' . $publiID . ')">💬 Comentarios</button>';
+    echo '</div>';
+
+    // Comentarios
+    $sqlComentarios = "
+        SELECT c.*, u.Nick 
+        FROM Comentarios c
+        JOIN Usuarios u ON c.usuarioID = u.ID
+        WHERE c.publiID = $publiID
+        ORDER BY c.fecha_comentario DESC
+        LIMIT 3
+    ";
+    $resComentarios = $conn->query($sqlComentarios);
+
+    echo '<div class="comments-section" id="comentarios-' . $publiID . '" style="display:none;">';
+    if ($resComentarios && $resComentarios->num_rows > 0) {
+        echo '<div class="comments-list">';
+        while ($coment = $resComentarios->fetch_assoc()) {
+            echo '<div class="comment">';
+            echo '<span class="comment-username">@' . htmlspecialchars($coment['Nick']) . ':</span> ';
+            echo '<span class="comment-text">' . htmlspecialchars($coment['comentario']) . '</span>';
+            echo '</div>';
+        }
+        echo '</div>';
+    } else {
+        echo '<p class="no-comments">No hay comentarios todavía.</p>';
+    }
+
+    // Formulario para comentar
+    echo '<form class="comment-form" onsubmit="enviarComentario(event, ' . $publiID . ')">';
+    echo '<input type="text" name="comentario" placeholder="Escribe un comentario..." required>';
+    echo '<button type="submit">Enviar</button>';
+    echo '</form>';
+    echo '</div>'; // fin comentarios
+    echo '</div>'; // fin post
+}
+?>
 </div>
 
-<footer></footer>
+
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("mediaModal");
-        const modalImg = document.getElementById("modalImage");
-        const modalVideo = document.getElementById("modalVideo");
-        const closeBtn = document.querySelector(".close");
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("mediaModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalVideo = document.getElementById("modalVideo");
+    const closeBtn = document.querySelector(".close");
 
-        document.querySelectorAll(".media-item").forEach(media => {
-            media.addEventListener("click", function () {
-                modal.style.display = "flex";
+    document.querySelectorAll(".media-item").forEach(media => {
+        media.addEventListener("click", function () {
+            modal.style.display = "flex";
 
-                if (this.tagName === "IMG") {
-                    modalImg.src = this.src;
-                    modalImg.style.display = "block";
-                    modalVideo.style.display = "none";
-                } else if (this.tagName === "VIDEO") {
-                    modalVideo.src = this.querySelector("source").src;
-                    modalVideo.style.display = "block";
-                    modalImg.style.display = "none";
-                }
-            });
-        });
-
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-            modalVideo.pause(); // Pausar el video al cerrar el modal
-        });
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-                modalVideo.pause();
+            if (this.tagName === "IMG") {
+                modalImg.src = this.src;
+                modalImg.style.display = "block";
+                modalVideo.style.display = "none";
+            } else if (this.tagName === "VIDEO") {
+                modalVideo.src = this.querySelector("source").src;
+                modalVideo.style.display = "block";
+                modalImg.style.display = "none";
             }
         });
     });
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        modalVideo.pause();
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+            modalVideo.pause();
+        }
+    });
+});
 </script>
 
 <!-- Modal para multimedia -->

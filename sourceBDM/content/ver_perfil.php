@@ -148,7 +148,7 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     mostrarPublicacionesUsuario($publicaciones, $logged_in);
     ?>
 </div>
-
+                
 <!-- Modal para multimedia -->
 <div id="mediaModal" class="modal">
     <span class="close">&times;</span>
