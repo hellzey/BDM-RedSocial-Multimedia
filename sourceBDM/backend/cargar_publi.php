@@ -5,7 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include 'conex.php';
 
-$id_usuario = $_SESSION['id_usuario'];
+// Verificar si el usuario está logueado
+$id_usuario = $_SESSION['id_usuario'] ?? null;
+$logged_in = $id_usuario !== null;
 
 $sql = "
     SELECT p.*, u.Nick, u.Foto, u.NombreC, u.ID as usuarioID
@@ -20,10 +22,13 @@ if ($resultado && $resultado->num_rows > 0) {
     while ($row = $resultado->fetch_assoc()) {
         $publiID = $row['publiID'];
         
-        // Comprobar si el usuario actual ya dio like a esta publicación
-        $sqlUserLike = "SELECT * FROM Reacciones WHERE publiID = $publiID AND usuarioID = $id_usuario AND tipo = 1";
-        $resUserLike = $conn->query($sqlUserLike);
-        $userLiked = ($resUserLike && $resUserLike->num_rows > 0);
+        // Comprobar si el usuario actual dio like (solo si está logueado)
+        $userLiked = false;
+        if ($logged_in) {
+            $sqlUserLike = "SELECT * FROM Reacciones WHERE publiID = $publiID AND usuarioID = $id_usuario AND tipo = 1";
+            $resUserLike = $conn->query($sqlUserLike);
+            $userLiked = ($resUserLike && $resUserLike->num_rows > 0);
+        }
         
         // Contador de "Me gusta"
         $sqlLikes = "SELECT COUNT(*) as total FROM Reacciones WHERE publiID = $publiID AND tipo = 1";
@@ -33,28 +38,29 @@ if ($resultado && $resultado->num_rows > 0) {
         // Inicio del post (publicación)
         echo '<div class="post">';
         
-     // Info del usuario
-echo '<div class="user-info">';
-echo '<div class="user-avatar">';
-echo !empty($row['Foto'])
-    ? '<img src="data:image/jpeg;base64,' . base64_encode($row['Foto']) . '" class="avatar-img">'
-    : '<img src="../media/usuario.png" class="avatar-img">';
-echo '</div>';
-echo '<div class="user-details">';
-echo '<p>';
-echo '<span class="username">';
-echo '<a href="ver_perfil.php?id=' . $row['usuarioID'] . '">';
-echo htmlspecialchars($row['NombreC'] ?? $row['Nick']);
-echo '</a>';
-echo '</span> ';
-echo '<span class="handle">';
-echo '<a href="ver_perfil.php?id=' . $row['usuarioID'] . '">';
-echo '@' . htmlspecialchars($row['Nick']);
-echo '</a>';
-echo '</span> · ';
-echo '<span class="time">' . date("H:i d/m/y", strtotime($row['fechacreacion'])) . '</span>';
-echo '</p>';
-echo '</div></div>'; // fin user-info
+        // Info del usuario
+        echo '<div class="user-info">';
+        echo '<div class="user-avatar">';
+        echo !empty($row['Foto'])
+            ? '<img src="data:image/jpeg;base64,' . base64_encode($row['Foto']) . '" class="avatar-img">'
+            : '<img src="../media/usuario.png" class="avatar-img">';
+        echo '</div>';
+        echo '<div class="user-details">';
+        echo '<p>';
+        echo '<span class="username">';
+        echo '<a href="ver_perfil.php?id=' . $row['usuarioID'] . '">';
+        echo htmlspecialchars($row['NombreC'] ?? $row['Nick']);
+        echo '</a>';
+        echo '</span> ';
+        echo '<span class="handle">';
+        echo '<a href="ver_perfil.php?id=' . $row['usuarioID'] . '">';
+        echo '@' . htmlspecialchars($row['Nick']);
+        echo '</a>';
+        echo '</span> · ';
+        echo '<span class="time">' . date("H:i d/m/y", strtotime($row['fechacreacion'])) . '</span>';
+        echo '</p>';
+        echo '</div></div>'; // fin user-info
+        
         // Contenido de la publicación
         echo '<div class="post-content">';
         echo '<p>' . htmlspecialchars($row['descripcion']) . '</p>';
@@ -79,11 +85,16 @@ echo '</div></div>'; // fin user-info
         // Sección de acciones (likes y comentarios)
         echo '<div class="post-actions">';
         
-        // Botón de like con indicación visual si el usuario ya dio like
-       // Botón de like con indicación visual si el usuario ya dio like
-$likedClass = $userLiked ? 'liked' : '';
-$likeIcon = $userLiked ? '❤️' : '🤍';
-echo '<button class="action-btn like-btn ' . $likedClass . '" onclick="toggleLike(' . $publiID . ')" id="like-btn-' . $publiID . '">' . $likeIcon . ' <span id="like-count-' . $publiID . '">' . $likes . '</span></button>';
+        // Botón de like con indicación visual
+        if ($logged_in) {
+            $likedClass = $userLiked ? 'liked' : '';
+            $likeIcon = $userLiked ? '❤️' : '🤍';
+            echo '<button class="action-btn like-btn ' . $likedClass . '" onclick="toggleLike(' . $publiID . ')" id="like-btn-' . $publiID . '">' . $likeIcon . ' <span id="like-count-' . $publiID . '">' . $likes . '</span></button>';
+        } else {
+            // Para usuarios no logueados, mostrar botón deshabilitado
+            echo '<button class="action-btn like-btn disabled" title="Inicia sesión para dar me gusta">🤍 ' . $likes . '</button>';
+        }
+        
         echo '<button class="action-btn comment-btn" onclick="mostrarComentarios(' . $publiID . ')">💬 Comentarios</button>';
         echo '</div>'; // fin post-actions
         
@@ -114,11 +125,15 @@ echo '<button class="action-btn like-btn ' . $likedClass . '" onclick="toggleLik
             echo '<p class="no-comments">No hay comentarios todavía.</p>';
         }
         
-        // Formulario para agregar comentario
-        echo '<form class="comment-form" onsubmit="enviarComentario(event, ' . $publiID . ')">';
-        echo '<input type="text" name="comentario" placeholder="Escribe un comentario..." required>';
-        echo '<button type="submit">Enviar</button>';
-        echo '</form>';
+        // Formulario para agregar comentario (solo para usuarios logueados)
+        if ($logged_in) {
+            echo '<form class="comment-form" onsubmit="enviarComentario(event, ' . $publiID . ')">';
+            echo '<input type="text" name="comentario" placeholder="Escribe un comentario..." required>';
+            echo '<button type="submit">Enviar</button>';
+            echo '</form>';
+        } else {
+            echo '<p class="login-hint">Inicia sesión para comentar.</p>';
+        }
         
         echo '</div>'; // fin comments-section
         
