@@ -13,15 +13,7 @@
 <div class="container">
     <h2>Publicaciones Recientes</h2>   
     
-    <div class="new-post-container">
-        <h3>Hacer una nueva publicación</h3>
-        <form>
-            <textarea placeholder="¿Qué estás pensando?" rows="4"></textarea>
-            <input type="file" id="file-upload" accept="image/*,video/*">
-            <label for="file-upload" class="file-upload-label">archivo</label>
-            <button type="submit">Publicar</button>
-        </form>
-    </div>
+   
 
     <div class="post-container">
         <?php include '../backend/cargar_publi.php'; ?>

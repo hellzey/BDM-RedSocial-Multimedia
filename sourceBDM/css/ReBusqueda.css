@@ -98,3 +98,14 @@ h2 {
     border-bottom: 1px solid #333;
     padding: 15px 0;
 }
+
+
+
+
+p a,
+p a:visited,
+p a:hover,
+p a:active {
+  color: white;
+  text-decoration: none;
+}

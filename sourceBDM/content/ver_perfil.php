@@ -5,7 +5,7 @@ require_once '../backend/usuario_info.php';
 require_once '../backend/perfil_publi.php';
 
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: iniciosesion.php");
+    header("Location: ../login/iniciosesion.php");
     exit();
 }
 
