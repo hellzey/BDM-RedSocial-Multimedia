@@ -144,3 +144,120 @@ body {
 .chat-input button:hover {
     background-color: #5a5a5a;
 }
+
+
+
+
+
+
+
+
+/* Estilos adicionales para grupos de chat */
+.group-indicator {
+    background-color: #ffd700;
+    color: #333;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #3c3c3c;
+    margin: 10% auto;
+    padding: 20px;
+    width: 70%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 5px 8px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+.user-selection {
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.user-option {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #3c3c3c;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.user-option:hover {
+    background-color: #424242;
+}
+
+.user-option.selected {
+    background-color: #a0dcff;
+    border-left: 3px solid #007bff;
+}
+
+.selected-count {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#btnConfirmarGrupo {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#btnConfirmarGrupo:hover {
+    background-color: #45a049;
+}
+
+#nombreGrupo {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #cc0000;
+    text-align: center;
+    padding: 10px;
+}
+
+
+
+
+
+
+
+

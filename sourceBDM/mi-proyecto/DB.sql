@@ -78,3 +78,37 @@ CREATE TABLE Mensajes (
     FOREIGN KEY (emisorID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
     FOREIGN KEY (receptorID) REFERENCES Usuarios(ID) ON DELETE CASCADE
 );
+
+
+
+
+-- Tabla para los grupos de chat
+CREATE TABLE GruposChat (
+    grupoID INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    creadorID INT NOT NULL,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (creadorID) REFERENCES Usuarios(ID) ON DELETE CASCADE
+);
+
+-- Tabla para los miembros del grupo
+CREATE TABLE MiembrosGrupo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    grupoID INT NOT NULL,
+    usuarioID INT NOT NULL,
+    fecha_union DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (grupoID) REFERENCES GruposChat(grupoID) ON DELETE CASCADE,
+    FOREIGN KEY (usuarioID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
+    UNIQUE KEY unique_member (grupoID, usuarioID)  -- Evita duplicados
+);
+
+-- Tabla para mensajes de grupo (separada de los mensajes directos)
+CREATE TABLE MensajesGrupo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    grupoID INT NOT NULL,
+    emisorID INT NOT NULL,
+    contenido TEXT NOT NULL,
+    fecha_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (grupoID) REFERENCES GruposChat(grupoID) ON DELETE CASCADE,
+    FOREIGN KEY (emisorID) REFERENCES Usuarios(ID) ON DELETE CASCADE
+);
