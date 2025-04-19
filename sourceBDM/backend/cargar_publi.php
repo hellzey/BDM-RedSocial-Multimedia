@@ -1,57 +1,123 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include 'conex.php';
 
-$sql = "SELECT p.*, u.NombreC, u.Nick, u.Foto 
-        FROM Publicaciones p 
-        JOIN Usuarios u ON p.usuarioID = u.ID 
-        ORDER BY RAND()";
+$id_usuario = $_SESSION['id_usuario'];
 
-$result = $conn->query($sql);
+$sql = "
+    SELECT p.*, u.Nick, u.Foto
+    FROM Publicaciones p
+    INNER JOIN Usuarios u ON p.usuarioID = u.ID
+    ORDER BY p.fechacreacion DESC
+";
 
-while($row = $result->fetch_assoc()):
-    ?>
-    <div class="post">
-        <div class="user-info">
-            <div class="user-avatar">
-                <img src="<?php echo $row['Foto'] ? 'data:image/jpeg;base64,' . base64_encode($row['Foto']) : '../media/usuario.png'; ?>" class="avatar-img">
-            </div>
-            <div class="user-details">
-                <p>
-                <span class="username">
-    <a href="ver_perfil.php?id=<?php echo $row['usuarioID']; ?>">
-        <?php echo htmlspecialchars($row['NombreC']); ?>
-    </a>
-</span>
-<span class="handle">
-    <a href="ver_perfil.php?id=<?php echo $row['usuarioID']; ?>">
-        @<?php echo htmlspecialchars($row['Nick']); ?>
-    </a>
-</span>
-                    <span class="time"><?php echo date("H:i", strtotime($row['fechacreacion'])); ?></span>
-                </p>
-            </div>
-        </div>
-        <p><?php echo htmlspecialchars($row['descripcion']); ?></p>
+$resultado = $conn->query($sql);
 
-        <?php
+if ($resultado && $resultado->num_rows > 0) {
+    while ($row = $resultado->fetch_assoc()) {
         $publiID = $row['publiID'];
-        $sqlMedia = "SELECT archivo, tipo FROM MultimediaPublicaciones WHERE publiID = $publiID";
-        $mediaResult = $conn->query($sqlMedia);
-        ?>
-
-        <?php if ($mediaResult->num_rows > 0): ?>
-            <div class="post-media">
-                <?php while($media = $mediaResult->fetch_assoc()): ?>
-                    <?php if ($media['tipo'] == 'imagen'): ?>
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($media['archivo']); ?>" class="media-item" alt="Imagen publicación">
-                    <?php elseif ($media['tipo'] == 'video'): ?>
-                        <video class="media-item" controls>
-                            <source src="data:video/mp4;base64,<?php echo base64_encode($media['archivo']); ?>" type="video/mp4">
-                            Tu navegador no soporta el video.
-                        </video>
-                    <?php endif; ?>
-                <?php endwhile; ?>
-            </div>
-        <?php endif; ?>
-    </div>
-<?php endwhile; ?>
+        
+        // Comprobar si el usuario actual ya dio like a esta publicación
+        $sqlUserLike = "SELECT * FROM Reacciones WHERE publiID = $publiID AND usuarioID = $id_usuario AND tipo = 1";
+        $resUserLike = $conn->query($sqlUserLike);
+        $userLiked = ($resUserLike && $resUserLike->num_rows > 0);
+        
+        // Contador de "Me gusta"
+        $sqlLikes = "SELECT COUNT(*) as total FROM Reacciones WHERE publiID = $publiID AND tipo = 1";
+        $likesRes = $conn->query($sqlLikes);
+        $likes = $likesRes->fetch_assoc()['total'] ?? 0;
+        
+        // Inicio del post (publicación)
+        echo '<div class="post">';
+        
+        // Información del usuario
+        echo '<div class="user-info">';
+        echo '<div class="user-avatar">';
+        if (!empty($row['Foto'])) {
+            echo '<img src="data:image/jpeg;base64,' . base64_encode($row['Foto']) . '" class="avatar-img">';
+        } else {
+            echo '<img src="img/default-profile.jpg" class="avatar-img">';
+        }
+        echo '</div>'; // fin user-avatar
+        
+        echo '<div class="user-details">';
+        echo '<span class="username">@' . htmlspecialchars($row['Nick']) . '</span>';
+        echo '<span class="time">' . date("d/m/Y H:i", strtotime($row['fechacreacion'])) . '</span>';
+        echo '</div>'; // fin user-details
+        echo '</div>'; // fin user-info
+        
+        // Contenido de la publicación
+        echo '<div class="post-content">';
+        echo '<p>' . htmlspecialchars($row['descripcion']) . '</p>';
+        
+        // Mostrar multimedia
+        $sqlMultimedia = "SELECT * FROM MultimediaPublicaciones WHERE publiID = $publiID";
+        $resultadoMultimedia = $conn->query($sqlMultimedia);
+        
+        if ($resultadoMultimedia && $resultadoMultimedia->num_rows > 0) {
+            echo '<div class="post-media">';
+            while ($media = $resultadoMultimedia->fetch_assoc()) {
+                if ($media['tipo'] == 'imagen') {
+                    echo '<img class="media-item" src="data:image/jpeg;base64,' . base64_encode($media['archivo']) . '">';
+                } elseif ($media['tipo'] == 'video') {
+                    echo '<video class="media-item" controls><source src="data:video/mp4;base64,' . base64_encode($media['archivo']) . '" type="video/mp4"></video>';
+                }
+            }
+            echo '</div>'; // fin post-media
+        }
+        echo '</div>'; // fin post-content
+        
+        // Sección de acciones (likes y comentarios)
+        echo '<div class="post-actions">';
+        
+        // Botón de like con indicación visual si el usuario ya dio like
+        $likedClass = $userLiked ? 'liked' : '';
+        echo '<button class="action-btn like-btn ' . $likedClass . '" data-publi="' . $publiID . '">❤️ Me gusta <span class="likes-counter">(' . $likes . ')</span></button>';
+        
+        echo '<button class="action-btn comment-btn" onclick="mostrarComentarios(' . $publiID . ')">💬 Comentarios</button>';
+        echo '</div>'; // fin post-actions
+        
+        // Obtener comentarios
+        $sqlComentarios = "
+            SELECT c.*, u.Nick 
+            FROM Comentarios c
+            JOIN Usuarios u ON c.usuarioID = u.ID
+            WHERE c.publiID = $publiID
+            ORDER BY c.fecha_comentario DESC
+            LIMIT 3
+        ";
+        $resComentarios = $conn->query($sqlComentarios);
+        
+        // Sección de comentarios
+        echo '<div class="comments-section" id="comentarios-' . $publiID . '" style="display:none;">';
+        
+        if ($resComentarios && $resComentarios->num_rows > 0) {
+            echo '<div class="comments-list">';
+            while ($coment = $resComentarios->fetch_assoc()) {
+                echo '<div class="comment">';
+                echo '<span class="comment-username">@' . htmlspecialchars($coment['Nick']) . ':</span> ';
+                echo '<span class="comment-text">' . htmlspecialchars($coment['comentario']) . '</span>';
+                echo '</div>';
+            }
+            echo '</div>'; // fin comments-list
+        } else {
+            echo '<p class="no-comments">No hay comentarios todavía.</p>';
+        }
+        
+        // Formulario para agregar comentario
+        echo '<form class="comment-form" onsubmit="enviarComentario(event, ' . $publiID . ')">';
+        echo '<input type="text" name="comentario" placeholder="Escribe un comentario..." required>';
+        echo '<button type="submit">Enviar</button>';
+        echo '</form>';
+        
+        echo '</div>'; // fin comments-section
+        
+        echo '</div>'; // fin post
+    }
+} else {
+    echo '<div class="no-posts">No hay publicaciones disponibles.</div>';
+}
+?>

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio</title>
     <link rel="stylesheet" href="../css/iniciocss.css">
+    <script src="../script/coment.js"></script>
 </head>
 <body> 
 
