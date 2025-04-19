@@ -28,29 +28,32 @@ if ($resultado->num_rows === 1) {
     echo "Usuario no encontrado";
     exit();
 }
-
 // Procesar la publicación si se envía el formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['publicar'])) {
     $descripcion = $_POST['descripcion'];
     $usuarioID = $idUsuario;
     $archivos = $_FILES['archivo'];
 
-    // Categorías (hashtags)
+    // Detectar categorías (hashtags)
     preg_match_all('/#(\w+)/', $descripcion, $matches);
     $categorias = $matches[1];
 
+    // Insertar la publicación
     $sql_pub = "INSERT INTO Publicaciones (descripcion, usuarioID, estatus) VALUES (?, ?, 1)";
     $stmt_pub = $conn->prepare($sql_pub);
     $stmt_pub->bind_param("si", $descripcion, $usuarioID);
     $stmt_pub->execute();
     $publiID = $stmt_pub->insert_id;
 
+    // Insertar las categorías si no existen
     foreach ($categorias as $categoria) {
+        // Verificar si la categoría ya existe
         $sql_cat = "INSERT INTO Categorias (categoria) SELECT ? WHERE NOT EXISTS (SELECT 1 FROM Categorias WHERE categoria = ?)";
         $stmt_cat = $conn->prepare($sql_cat);
         $stmt_cat->bind_param("ss", $categoria, $categoria);
         $stmt_cat->execute();
 
+        // Obtener el ID de la categoría
         $sql_get_cat = "SELECT categoriaID FROM Categorias WHERE categoria = ?";
         $stmt_get_cat = $conn->prepare($sql_get_cat);
         $stmt_get_cat->bind_param("s", $categoria);
@@ -58,13 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['publicar'])) {
         $resultado_cat = $stmt_get_cat->get_result();
         $categoriaID = $resultado_cat->fetch_assoc()['categoriaID'];
 
+        // Asociar la categoría con la publicación
         $sql_assoc = "INSERT INTO Publicaciones_Categorias (publiID, categoriaID) VALUES (?, ?)";
         $stmt_assoc = $conn->prepare($sql_assoc);
         $stmt_assoc->bind_param("ii", $publiID, $categoriaID);
         $stmt_assoc->execute();
     }
 
-    // Procesar archivos
+    // Procesar los archivos multimedia
     if (!empty($archivos['name'][0])) {
         foreach ($archivos['tmp_name'] as $key => $tmp_name) {
             $file_tmp = $archivos['tmp_name'][$key];
@@ -90,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['publicar'])) {
     header("Location: perfil.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
