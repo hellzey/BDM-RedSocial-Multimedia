@@ -427,3 +427,53 @@ p a:active {
   color: white;
   text-decoration: none;
 }
+
+
+.like-btn.liked:active {
+    animation: likeAnimation 0.3s ease;
+}
+
+.like-btn.liked {
+    color: #e74c3c;
+}
+
+.like-btn:hover {
+    opacity: 0.8;
+}
+
+.action-btn {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #3d3d3d;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.comment-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    background-color: #1A1A1A;
+    color: #fff;
+}
+
+.comment-form button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.comment-form button:hover {
+    background-color: #555;
+}

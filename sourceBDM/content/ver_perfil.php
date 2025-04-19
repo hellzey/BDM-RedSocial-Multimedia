@@ -100,7 +100,9 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <meta charset="UTF-8">
     <title>Perfil de <?php echo htmlspecialchars($nombre); ?></title>
     <link rel="stylesheet" href="../css/verperfil.css">
-    <script src="../js/verpubli.js"></script>
+    <script src="../script/coment.js"></script>
+    <script src="../script/like.js"></script>
+
 </head>
 <body>
 <?php include 'nav.php'; ?>
@@ -132,82 +134,104 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
         </form>
     </div>
 </div>
-
 <!-- Mostrar publicaciones -->
 <h2>Publicaciones de <?php echo htmlspecialchars($nombre); ?></h2>
 <div class="post-container">
     <?php
-    if (empty($publicaciones)) {
-        echo "<p class='no-posts'>Este usuario aún no tiene publicaciones.</p>";
-    } else {
-        foreach ($publicaciones as $publi) {
-            echo "<div class='post'>";
-            echo "<div class='user-info'>";
-            echo "<div class='user-avatar'>";
-            echo "<img src='" . $foto . "' alt='Avatar de " . htmlspecialchars($nombre) . "' class='avatar-img'>";
-            echo "</div>";
-            echo "<div class='user-details'>";
-            echo "<p><span class='username'>" . htmlspecialchars($nombre) . "</span> <span class='handle'>@" . htmlspecialchars($nick) . "</span> · <span class='time'>" . $publi['fechacreacion'] . "</span></p>";
-            echo "</div></div>";
-
-            echo "<p>" . htmlspecialchars($publi['descripcion']) . "</p>";
-
-            if (!empty($publi['multimedia'])) {
-                echo "<div class='post-media'>";
-                foreach ($publi['multimedia'] as $media) {
-                    $archivo = base64_encode($media['archivo']);
-                    if ($media['tipo'] === 'imagen') {
-                        echo "<img src='data:image/jpeg;base64,{$archivo}' alt='Imagen de publicación' class='media-item'>";
-                    } elseif ($media['tipo'] === 'video') {
-                        echo "<video controls class='media-item'><source src='data:video/mp4;base64,{$archivo}' type='video/mp4'></video>";
-                    }
-                }
-                echo "</div>";
-            }
-
-            echo "</div>";
-        }
-    }
+    // Obtenemos las publicaciones del usuario
+    $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
+    
+    // Verificamos si el usuario actual está logueado para las funciones de like y comentario
+    $logged_in = isset($_SESSION['id_usuario']);
+    
+    // Mostramos las publicaciones con el formato actualizado
+    mostrarPublicacionesUsuario($publicaciones, $logged_in);
     ?>
 </div>
 
-<footer></footer>
-
+<!-- Asegúrate de incluir estos scripts para la funcionalidad de like y comentarios -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("mediaModal");
-        const modalImg = document.getElementById("modalImage");
-        const modalVideo = document.getElementById("modalVideo");
-        const closeBtn = document.querySelector(".close");
-
-        document.querySelectorAll(".media-item").forEach(media => {
-            media.addEventListener("click", function () {
-                modal.style.display = "flex";
-
-                if (this.tagName === "IMG") {
-                    modalImg.src = this.src;
-                    modalImg.style.display = "block";
-                    modalVideo.style.display = "none";
-                } else if (this.tagName === "VIDEO") {
-                    modalVideo.src = this.querySelector("source").src;
-                    modalVideo.style.display = "block";
-                    modalImg.style.display = "none";
+    function toggleLike(publiID) {
+        // La función de like que ya tienes implementada
+        fetch('../backend/like_publi.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'publiID=' + publiID
+        })
+        .then(response => response.json())
+        .then(data => {
+            const likeBtn = document.getElementById('like-btn-' + publiID);
+            const likeCount = document.getElementById('like-count-' + publiID);
+            
+            if (data.status === 'success') {
+                if (data.action === 'like') {
+                    likeBtn.classList.add('liked');
+                    likeBtn.innerHTML = '❤️ <span id="like-count-' + publiID + '">' + data.likes + '</span>';
+                } else {
+                    likeBtn.classList.remove('liked');
+                    likeBtn.innerHTML = '🤍 <span id="like-count-' + publiID + '">' + data.likes + '</span>';
                 }
-            });
-        });
-
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-            modalVideo.pause(); // Pausar el video al cerrar el modal
-        });
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-                modalVideo.pause();
+                likeCount.textContent = data.likes;
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-    });
+    }
+
+    function mostrarComentarios(publiID) {
+        const comentariosSection = document.getElementById('comentarios-' + publiID);
+        if (comentariosSection.style.display === 'none') {
+            comentariosSection.style.display = 'block';
+        } else {
+            comentariosSection.style.display = 'none';
+        }
+    }
+
+    function enviarComentario(event, publiID) {
+        event.preventDefault();
+        const form = event.target;
+        const comentario = form.comentario.value;
+        
+        fetch('../backend/guardar_comentario.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'publiID=' + publiID + '&comentario=' + encodeURIComponent(comentario)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Añadir el nuevo comentario a la lista
+                const comentariosList = form.previousElementSibling;
+                const noComments = document.querySelector('#comentarios-' + publiID + ' .no-comments');
+                
+                if (noComments) {
+                    noComments.remove();
+                    const newCommentsList = document.createElement('div');
+                    newCommentsList.className = 'comments-list';
+                    comentariosList.parentNode.insertBefore(newCommentsList, form);
+                }
+                
+                const commentsList = document.querySelector('#comentarios-' + publiID + ' .comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = `
+                    <span class="comment-username">@${data.nick}:</span>
+                    <span class="comment-text">${comentario}</span>
+                `;
+                
+                commentsList.prepend(newComment);
+                form.reset();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 </script>
 
 <!-- Modal para multimedia -->
