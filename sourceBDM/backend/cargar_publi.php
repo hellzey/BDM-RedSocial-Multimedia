@@ -57,6 +57,29 @@ if ($resultado && $resultado->num_rows > 0) {
 
         // Botón para mostrar comentarios
         echo '<div class="post-actions">';
+
+        // Verificar si el usuario ha dado like a esta publicación
+        $liked = false;
+        if ($id_usuario) {
+            $sqlLike = "SELECT * FROM Reacciones WHERE usuarioID = $id_usuario AND publiID = $publiID AND tipo = 1";
+            $resLike = $conn->query($sqlLike);
+            $liked = ($resLike && $resLike->num_rows > 0);
+        }
+
+        // Contar número total de likes
+        $sqlCountLikes = "SELECT COUNT(*) as total FROM Reacciones WHERE publiID = $publiID AND tipo = 1";
+        $resCountLikes = $conn->query($sqlCountLikes);
+        $likeCount = ($resCountLikes) ? $resCountLikes->fetch_assoc()['total'] : 0;
+
+        // Botón de like
+        if ($id_usuario) {
+            $likeClass = $liked ? 'liked' : '';
+            $likeIcon = $liked ? '❤️' : '🤍';
+            echo '<button class="action-btn like-btn ' . $likeClass . '" onclick="toggleLike(' . $publiID . ')" id="like-btn-' . $publiID . '">' . $likeIcon . ' <span id="like-count-' . $publiID . '">' . $likeCount . '</span></button>';
+        } else {
+            echo '<button class="action-btn like-btn disabled" title="Inicia sesión para dar like">🤍 ' . $likeCount . '</button>';
+        }
+
         echo '<button class="action-btn comment-btn" onclick="mostrarComentarios(' . $publiID . ')">💬 Comentarios</button>';
         echo '</div>';
 
