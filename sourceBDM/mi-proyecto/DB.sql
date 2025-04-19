@@ -67,3 +67,12 @@ CREATE TABLE Publicaciones_Categorias (
     FOREIGN KEY (publiID) REFERENCES Publicaciones(publiID) ON DELETE CASCADE,
     FOREIGN KEY (categoriaID) REFERENCES Categorias(categoriaID) ON DELETE CASCADE
 );
+CREATE TABLE Seguidores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    SeguidorID INT NOT NULL,    -- Usuario que sigue (el seguidor)
+    SeguidoID INT NOT NULL,     -- Usuario que es seguido
+    fecha_seguimiento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (SeguidorID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
+    FOREIGN KEY (SeguidoID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
+    UNIQUE KEY unique_follow (SeguidorID, SeguidoID)  -- Evita duplicados
+);

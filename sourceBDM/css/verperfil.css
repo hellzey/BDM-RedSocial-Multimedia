@@ -1,0 +1,421 @@
+/*----------------------------------------
+    RESET Y CONFIGURACIÓN GENERAL
+----------------------------------------*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; 
+    color: #fff; 
+    padding-top: 60px;
+}
+
+/*----------------------------------------
+    CONTENEDORES GENERALES
+----------------------------------------*/
+.container {
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+/*----------------------------------------
+    PERFIL DE USUARIO
+----------------------------------------*/
+.profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.profile-handle {
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.profile-bio {
+    font-size: 1em;
+    color: #ccc;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/*----------------------------------------
+    PUBLICACIONES DEL USUARIO
+----------------------------------------*/
+.post-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.post {
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+/* Información del Usuario en la Publicación */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-avatar {
+    margin-right: 10px;
+}
+
+.user-avatar i {
+    font-size: 40px; 
+    color: #888; 
+}
+
+.user-details {
+    flex-grow: 1;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.handle {
+    color: #888;
+}
+
+.time {
+    color: #555;
+    font-size: 0.9em;
+}
+/*----------------------------------------
+    RESET Y CONFIGURACIÓN GENERAL
+----------------------------------------*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    padding-top: 60px; /* Ajusta este valor según la altura de tu nav */
+}
+
+/*----------------------------------------
+    ENCABEZADO (HEADER)
+----------------------------------------*/
+h1 {
+    text-align: center; /* Centrar el texto del h1 */
+    margin-bottom: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+/*----------------------------------------
+    CONTENEDORES GENERALES
+----------------------------------------*/
+.container {
+    padding: 20px;
+}
+
+/*----------------------------------------
+    PUBLICACIONES DEL USUARIO
+----------------------------------------*/
+.post-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.post {
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
+}
+
+/*----------------------------------------
+    INFORMACIÓN DEL USUARIO EN LAS PUBLICACIONES
+----------------------------------------*/
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    margin-right: 10px;
+}
+
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.user-details {
+    flex-grow: 1;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.handle {
+    color: #888;
+}
+
+.time {
+    color: #888;
+}
+
+/*----------------------------------------
+    NUEVAS PUBLICACIONES
+----------------------------------------*/
+.new-post-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.new-post-container h3 {
+    margin-bottom: 10px;
+}
+
+.new-post-container textarea {
+    width: calc(100% - 20px); 
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #000;
+    color: #fff;
+    box-sizing: border-box; 
+}
+
+.new-post-container input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.new-post-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+}
+
+.new-post-container button:hover {
+    background-color: #777;
+}
+
+/*----------------------------------------
+    ESTILOS DE CARGA DE ARCHIVOS
+----------------------------------------*/
+.new-post-container input[type="file"] {
+    display: none; 
+}
+
+.new-post-container .file-upload-label {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.new-post-container .file-upload-label:hover {
+    background-color: #777;
+}
+
+/*----------------------------------------
+    IMÁGENES EN PUBLICACIONES
+----------------------------------------*/
+.post-images {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.post-images img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.post-images img:hover {
+    transform: scale(1.1);
+}
+
+/*----------------------------------------
+    MODAL PARA VISTA PREVIA DE IMÁGENES
+----------------------------------------*/
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Contenedor para imágenes y videos */
+.post-media {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.media-item {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.media-item:hover {
+    transform: scale(1.1);
+}
+
+/* Para videos, aseguramos que tengan estilos similares */
+.media-item video {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+
+/* Estilos para la previsualización */
+#preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.file-preview {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.preview-img,
+.preview-video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+
+
+
+
+
+
+
+/* Estilos para botones de seguir/dejar de seguir */
+.follow-btn, .unfollow-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    margin-top: 10px;
+}
+
+.follow-btn {
+    background-color: #828282;
+    color: rgb(0, 0, 0);
+}
+
+.unfollow-btn {
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+    border: 1px solid #040404;
+}
+
+.follow-btn:hover {
+    background-color: #ffffff;
+}
+
+.unfollow-btn:hover {
+    color: #000;
+    background-color: #ffffff;
+}
+
+.no-posts {
+    text-align: center;
+    color: #657786;
+    margin: 30px 0;
+}

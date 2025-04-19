@@ -17,8 +17,16 @@ while($row = $result->fetch_assoc()):
             </div>
             <div class="user-details">
                 <p>
-                    <span class="username"><?php echo htmlspecialchars($row['NombreC']); ?></span>
-                    <span class="handle">@<?php echo htmlspecialchars($row['Nick']); ?></span> · 
+                <span class="username">
+    <a href="ver_perfil.php?id=<?php echo $row['usuarioID']; ?>">
+        <?php echo htmlspecialchars($row['NombreC']); ?>
+    </a>
+</span>
+<span class="handle">
+    <a href="ver_perfil.php?id=<?php echo $row['usuarioID']; ?>">
+        @<?php echo htmlspecialchars($row['Nick']); ?>
+    </a>
+</span>
                     <span class="time"><?php echo date("H:i", strtotime($row['fechacreacion'])); ?></span>
                 </p>
             </div>
