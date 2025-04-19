@@ -68,3 +68,13 @@ CREATE TABLE Seguidores (
     FOREIGN KEY (SeguidoID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
     UNIQUE KEY unique_follow (SeguidorID, SeguidoID)  -- Evita duplicados
 );
+
+CREATE TABLE Mensajes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    emisorID INT NOT NULL,
+    receptorID INT NOT NULL,
+    contenido TEXT NOT NULL,
+    fecha_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emisorID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
+    FOREIGN KEY (receptorID) REFERENCES Usuarios(ID) ON DELETE CASCADE
+);
