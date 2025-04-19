@@ -131,9 +131,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['publicar'])) {
         <textarea name="descripcion" placeholder="¿Qué estás pensando?" rows="4"></textarea>
         <input type="file" name="archivo[]" id="file-upload" accept="image/*,video/*" multiple>
         <label for="file-upload" class="file-upload-label">archivo</label>
+
+        <!-- Sección de previsualización -->
+        <div id="preview-container"></div>
+
         <button type="submit" name="publicar">Publicar</button>
     </form>
 </div>
+
+<script>
+    document.getElementById('file-upload').addEventListener('change', function(event) {
+        const files = event.target.files;
+        const previewContainer = document.getElementById('preview-container');
+        previewContainer.innerHTML = '';  // Limpiar las previsualizaciones anteriores
+
+        // Recorrer todos los archivos seleccionados
+        Array.from(files).forEach(file => {
+            const fileReader = new FileReader();
+
+            fileReader.onload = function(e) {
+                const fileType = file.type;
+
+                // Crear el elemento de previsualización
+                const previewElement = document.createElement('div');
+                previewElement.classList.add('file-preview');
+
+                if (fileType.startsWith('image')) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Imagen de previsualización';
+                    img.classList.add('preview-img');
+                    previewElement.appendChild(img);
+                } else if (fileType.startsWith('video')) {
+                    const video = document.createElement('video');
+                    video.controls = true;
+                    video.src = e.target.result;
+                    video.classList.add('preview-video');
+                    previewElement.appendChild(video);
+                }
+
+                previewContainer.appendChild(previewElement);
+            };
+
+            // Leer el archivo seleccionado
+            fileReader.readAsDataURL(file);
+        });
+    });
+</script>
+
+
 
 <!-- Mostrar publicaciones -->
 <h2>Publicaciones del Usuario</h2>
