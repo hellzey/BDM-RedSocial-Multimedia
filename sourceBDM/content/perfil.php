@@ -66,9 +66,9 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <p class="profile-bio"><?php echo htmlspecialchars($biografia ?: "Este usuario aún no ha escrito su biografía."); ?></p>
 
     <p class="followers-count">
-        <a href="followers.php"><?php echo $seguidores; ?> Seguidores</a><br>
-        <a href="edit_perfil.php">Editar perfil</a>
-    </p>
+    <a href="followers.php"><?php echo $seguidores; ?> Seguidores</a><br>
+    <a href="edit_perfil.php">Editar perfil</a>
+</p>
 </div>
 
 <!-- Formulario de Publicación -->

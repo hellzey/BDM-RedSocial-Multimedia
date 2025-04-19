@@ -419,3 +419,11 @@ h2 {
     color: #657786;
     margin: 30px 0;
 }
+
+p a,
+p a:visited,
+p a:hover,
+p a:active {
+  color: white;
+  text-decoration: none;
+}

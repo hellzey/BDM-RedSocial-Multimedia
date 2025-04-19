@@ -52,15 +52,7 @@ CREATE TABLE Reacciones (
     FOREIGN KEY (usuarioID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
     FOREIGN KEY (publiID) REFERENCES Publicaciones(publiID) ON DELETE CASCADE
 );
-CREATE TABLE Amistades (
-    amistadID INT PRIMARY KEY AUTO_INCREMENT,
-    usuario1ID INT NOT NULL,  -- Usuario que envía la solicitud
-    usuario2ID INT NOT NULL,  -- Usuario que recibe la solicitud
-    estado ENUM('pendiente', 'aceptado', 'rechazado') DEFAULT 'pendiente',
-    fecha_solicitud TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario1ID) REFERENCES Usuarios(ID) ON DELETE CASCADE,
-    FOREIGN KEY (usuario2ID) REFERENCES Usuarios(ID) ON DELETE CASCADE
-);
+
 CREATE TABLE Publicaciones_Categorias (
     publiID INT,                -- Relación con Publicaciones
     categoriaID INT,            -- Relación con Categorías

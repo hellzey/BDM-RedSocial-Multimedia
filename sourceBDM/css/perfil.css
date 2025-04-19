@@ -376,3 +376,10 @@ h2 {
     max-height: 100%;
     object-fit: cover;
 }
+p a,
+p a:visited,
+p a:hover,
+p a:active {
+  color: white;
+  text-decoration: none;
+}

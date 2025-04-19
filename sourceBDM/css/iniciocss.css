@@ -13,8 +13,15 @@ body {
 /*----------------------------------------
     ENCABEZADO (HEADER)
 ----------------------------------------*/
+p a,
+p a:visited,
+p a:hover,
+p a:active {
+  color: white;
+  text-decoration: none;
+}
 
-
+  
 h1 {
     text-align: center; /* Centrar el texto del h1 */
     margin-bottom: 10px;

@@ -8,6 +8,23 @@ body {
     padding-top: 60px;
 }
 
+p a,
+p a:visited,
+p a:hover,
+p a:active {
+  color: white;
+  text-decoration: none;
+}
+
+ a,
+ a:visited,
+ a:hover,
+ a:active {
+  color: white;
+  text-decoration: none;
+}
+
+
 /* Contenedor principal */
 .follow-container {
     max-width: 800px;

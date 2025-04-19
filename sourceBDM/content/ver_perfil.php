@@ -116,8 +116,8 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <p class="profile-bio"><?php echo htmlspecialchars($biografia ?: "Este usuario aún no ha escrito su biografía."); ?></p>
 
     <p class="followers-count">
-        <?php echo $seguidores; ?> Seguidores
-    </p>
+    <a href="followers.php?id=<?php echo $idUsuario; ?>"><?php echo $seguidores; ?> Seguidores</a>
+</p>
     
     <!-- Botón de seguir/dejar de seguir -->
     <div class="follow-action">
