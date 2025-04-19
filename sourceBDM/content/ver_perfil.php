@@ -149,96 +149,49 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     ?>
 </div>
 
-<!-- Asegúrate de incluir estos scripts para la funcionalidad de like y comentarios -->
-<script>
-    function toggleLike(publiID) {
-        // La función de like que ya tienes implementada
-        fetch('../backend/like_publi.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'publiID=' + publiID
-        })
-        .then(response => response.json())
-        .then(data => {
-            const likeBtn = document.getElementById('like-btn-' + publiID);
-            const likeCount = document.getElementById('like-count-' + publiID);
-            
-            if (data.status === 'success') {
-                if (data.action === 'like') {
-                    likeBtn.classList.add('liked');
-                    likeBtn.innerHTML = '❤️ <span id="like-count-' + publiID + '">' + data.likes + '</span>';
-                } else {
-                    likeBtn.classList.remove('liked');
-                    likeBtn.innerHTML = '🤍 <span id="like-count-' + publiID + '">' + data.likes + '</span>';
-                }
-                likeCount.textContent = data.likes;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    function mostrarComentarios(publiID) {
-        const comentariosSection = document.getElementById('comentarios-' + publiID);
-        if (comentariosSection.style.display === 'none') {
-            comentariosSection.style.display = 'block';
-        } else {
-            comentariosSection.style.display = 'none';
-        }
-    }
-
-    function enviarComentario(event, publiID) {
-        event.preventDefault();
-        const form = event.target;
-        const comentario = form.comentario.value;
-        
-        fetch('../backend/guardar_comentario.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'publiID=' + publiID + '&comentario=' + encodeURIComponent(comentario)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                // Añadir el nuevo comentario a la lista
-                const comentariosList = form.previousElementSibling;
-                const noComments = document.querySelector('#comentarios-' + publiID + ' .no-comments');
-                
-                if (noComments) {
-                    noComments.remove();
-                    const newCommentsList = document.createElement('div');
-                    newCommentsList.className = 'comments-list';
-                    comentariosList.parentNode.insertBefore(newCommentsList, form);
-                }
-                
-                const commentsList = document.querySelector('#comentarios-' + publiID + ' .comments-list');
-                const newComment = document.createElement('div');
-                newComment.className = 'comment';
-                newComment.innerHTML = `
-                    <span class="comment-username">@${data.nick}:</span>
-                    <span class="comment-text">${comentario}</span>
-                `;
-                
-                commentsList.prepend(newComment);
-                form.reset();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-</script>
-
 <!-- Modal para multimedia -->
 <div id="mediaModal" class="modal">
     <span class="close">&times;</span>
     <img class="modal-content" id="modalImage">
     <video class="modal-content" id="modalVideo" controls></video>
 </div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("mediaModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalVideo = document.getElementById("modalVideo");
+    const closeBtn = document.querySelector(".close");
+
+    document.querySelectorAll(".media-item").forEach(media => {
+        media.addEventListener("click", function () {
+            modal.style.display = "flex";
+
+            if (this.tagName === "IMG") {
+                modalImg.src = this.src;
+                modalImg.style.display = "block";
+                modalVideo.style.display = "none";
+            } else if (this.tagName === "VIDEO") {
+                modalVideo.src = this.querySelector("source").src;
+                modalVideo.style.display = "block";
+                modalImg.style.display = "none";
+            }
+        });
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        modalVideo.pause();
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+            modalVideo.pause();
+        }
+    });
+});
+</script>
 </body>
 </html>

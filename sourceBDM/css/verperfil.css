@@ -454,7 +454,45 @@ p a:active {
     opacity: 0.6;
     cursor: not-allowed;
 }
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.comments-section {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #252525;
+    border-radius: 8px;
+}
 
+.comments-list {
+    margin-bottom: 15px;
+}
+
+.comment {
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-username {
+    font-weight: bold;
+    color: #fff;
+}
+
+.comment-text {
+    color: #ddd;
+}
+
+.no-comments {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+}
 .comment-form input {
     flex: 1;
     padding: 8px 12px;
@@ -476,4 +514,10 @@ p a:active {
 
 .comment-form button:hover {
     background-color: #555;
+}
+/* Animación para el botón de like */
+@keyframes likeAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
