@@ -85,3 +85,20 @@ p a:active {
 .follow-btn:hover {
     background-color: #0d8bf0;
 }
+
+.reporte-btn{
+  padding: 10px 20px;
+  background-color:  #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reporte-btn:hover {
+  background-color: #888; /* Cambia el color al pasar el cursor sobre el botón */
+}
+
+.reporte-btn:active {
+   background-color: #555;
+}

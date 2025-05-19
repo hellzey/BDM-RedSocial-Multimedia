@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 <link rel="stylesheet" href="../css/nav.css">
+<link rel="Icon" href="../media/Freedom_Icono.png">
 <nav>
     <a href="inicio.php">
         <img src="../media/Freedom_Icono.png" alt="Logo" class="logo">

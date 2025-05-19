@@ -12,7 +12,7 @@ if (!isset($_SESSION['id_usuario'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mensajes</title>
     <link rel="stylesheet" href="../css/Mensajes.css">
-
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body> 
     <?php include 'nav.php'; ?>

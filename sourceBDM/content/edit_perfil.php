@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil</title>
     <link rel="stylesheet" href="../css/edit_perfil.css">
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body>
 
@@ -60,8 +61,12 @@ if ($resultado->num_rows === 1) {
 
         <label for="file-upload" class="file-upload-label">Cambiar Foto de Perfil</label>
         <input type="file" id="file-upload" name="foto_perfil" accept="image/*" style="display: none;">
-
+        <p>
         <button type="submit">Actualizar</button>
+    </form>
+
+    <form action="../backend/eliminar_perfil.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.');">
+        <button type="submit" style="background-color: red; color: white; padding: 10px; border: none; border-radius: 5px;">Eliminar Perfil</button>
     </form>
 </div>
 
@@ -76,6 +81,12 @@ document.getElementById("file-upload").addEventListener("change", function(event
         reader.readAsDataURL(file);
     }
 });
+</script>
+
+<script>
+function confirmarEliminacion() {
+    return confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.");
+}
 </script>
 
 </body>

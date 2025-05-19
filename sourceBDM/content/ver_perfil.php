@@ -102,7 +102,7 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <link rel="stylesheet" href="../css/verperfil.css">
     <script src="../script/coment.js"></script>
     <script src="../script/like.js"></script>
-
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body>
 <?php include 'nav.php'; ?>

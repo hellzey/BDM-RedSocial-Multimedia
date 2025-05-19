@@ -40,6 +40,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['publicar'])) {
     }
 }
 
+// Procesar eliminación de publicación
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_publicacion'])) {
+    $publiID = intval($_POST['publi_id']);
+
+    // Verifica que la publicación pertenezca al usuario antes de eliminarla
+    $stmt = $conn->prepare("DELETE FROM Publicaciones WHERE publiID = ? AND usuarioID = ?");
+    $stmt->bind_param("ii", $publiID, $idUsuario);
+    $stmt->execute();
+
+    // También puedes eliminar multimedia asociada, reacciones, comentarios, etc., si lo deseas
+
+    header("Location: perfil.php");
+    exit();
+}
+
 // Obtener publicaciones del usuario
 $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
 ?>
@@ -52,6 +67,7 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <link rel="stylesheet" href="../css/perfil.css">
     <script src="../script/coment.js"></script>
     <script src="../script/like.js"></script>
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body>
 <?php include 'nav.php'; ?>
@@ -67,8 +83,8 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <p class="profile-bio"><?php echo htmlspecialchars($biografia ?: "Este usuario aún no ha escrito su biografía."); ?></p>
 
     <p class="followers-count">
-    <a href="followers.php"><?php echo $seguidores; ?> Seguidores</a><br>
-    <a href="edit_perfil.php">Editar perfil</a>
+    <a href="followers.php"><?php echo $seguidores; ?> Seguidores</a><br><p>
+    <a href="edit_perfil.php">Editar perfil</a><br>
 </p>
 </div>
 
@@ -81,13 +97,25 @@ $publicaciones = obtenerPublicacionesUsuario($conn, $idUsuario);
     <form action="perfil.php" method="POST" enctype="multipart/form-data">
         <textarea name="descripcion" placeholder="¿Qué estás pensando?" rows="4"></textarea>
         <input type="file" name="archivo[]" id="file-upload" accept="image/*,video/*" multiple>
-        <label for="file-upload" class="file-upload-label">archivo</label>
-
+        <label for="file-upload" class="file-upload-label">File</label>
         <!-- Sección de previsualización -->
         <div id="preview-container"></div>
-
         <button type="submit" name="publicar">Publicar</button>
-    </form>
+    </form><br>
+
+    <!-- Generar reporte de publicaciones --> 
+     <div class="report-buttons">
+       <h3>Reporte de mis publicaciones</h3>
+       <form action="../backend/reporte.php" method="GET" style="display:inline;">
+       <input type="hidden" name="usuarioID" value="<?php echo $idUsuario; ?>">
+       <button type="submit" name="formato" value="csv">Descargar CSV</button>
+       </form>
+       <form action="../backend/reporte.php" method="GET" style="display:inline;">
+       <input type="hidden" name="usuarioID" value="<?php echo $idUsuario; ?>">
+       <button type="submit" name="formato" value="pdf">Descargar PDF</button>
+       </form>
+     </div>
+
 </div>
 
 <script>
@@ -173,11 +201,18 @@ foreach ($publicaciones as $publi) {
 
     // Sección de acciones
     echo '<div class="post-actions">';
-    $likedClass = $userLiked ? 'liked' : '';
-    echo '<button id="like-btn-' . $publiID . '" class="action-btn like-btn ' . $likedClass . '" onclick="toggleLike(' . $publiID . ')">❤️ <span id="like-count-' . $publiID . '">' . $likes . '</span></button>';
+$likedClass = $userLiked ? 'liked' : '';
+echo '<button id="like-btn-' . $publiID . '" class="action-btn like-btn ' . $likedClass . '" onclick="toggleLike(' . $publiID . ')">❤️ <span id="like-count-' . $publiID . '">' . $likes . '</span></button>';
+echo '<button class="action-btn comment-btn" onclick="mostrarComentarios(' . $publiID . ')">💬 Comentarios</button>';
 
-    echo '<button class="action-btn comment-btn" onclick="mostrarComentarios(' . $publiID . ')">💬 Comentarios</button>';
-    echo '</div>';
+// Botón eliminar solo para el dueño de la publicación
+if ($publi['usuarioID'] == $idUsuario) {
+    echo '<form action="perfil.php" method="POST" onsubmit="return confirm(\'¿Estás seguro de que deseas eliminar esta publicación?\');" style="display:inline;">';
+    echo '<input type="hidden" name="publi_id" value="' . $publiID . '">';
+    echo '<button type="submit" name="eliminar_publicacion" class="action-btn delete-btn">🗑️ Eliminar</button>';
+    echo '</form>';
+}
+echo '</div>';
 
     // Comentarios
     $sqlComentarios = "
@@ -260,5 +295,79 @@ document.addEventListener("DOMContentLoaded", function () {
     <img class="modal-content" id="modalImage">
     <video class="modal-content" id="modalVideo" controls></video>
 </div>
+
+<script>
+// Función para abrir el modal de edición
+function abrirEdicion(publiID) {
+    // Obtener los datos de la publicación mediante AJAX
+    fetch(`../backend/obtener_publicacion.php?publiID=${publiID}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Llenar el formulario con los datos
+                document.getElementById('editPubliID').value = publiID;
+                document.getElementById('editDescripcion').value = data.publicacion.descripcion;
+                
+                // Mostrar los medios existentes
+                const mediaContainer = document.getElementById('editMediaContainer');
+                mediaContainer.innerHTML = '';
+                
+                if (data.multimedia && data.multimedia.length > 0) {
+                    mediaContainer.innerHTML = '<h4>Medios existentes:</h4>';
+                    
+                    data.multimedia.forEach(media => {
+                        const mediaDiv = document.createElement('div');
+                        mediaDiv.className = 'existing-media';
+                        
+                        if (media.tipo === 'imagen') {
+                            mediaDiv.innerHTML = `
+                                <img src="data:image/jpeg;base64,${media.archivo}" class="preview-media">
+                                <label>
+                                    <input type="checkbox" name="eliminar_media[]" value="${media.ID}">
+                                    Eliminar
+                                </label>
+                            `;
+                        } else if (media.tipo === 'video') {
+                            mediaDiv.innerHTML = `
+                                <video controls class="preview-media">
+                                    <source src="data:video/mp4;base64,${media.archivo}" type="video/mp4">
+                                </video>
+                                <label>
+                                    <input type="checkbox" name="eliminar_media[]" value="${media.ID}">
+                                    Eliminar
+                                </label>
+                            `;
+                        }
+                        
+                        mediaContainer.appendChild(mediaDiv);
+                    });
+                }
+                
+                // Mostrar el modal
+                document.getElementById('editModal').style.display = 'flex';
+            } else {
+                alert('Error al cargar la publicación: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al cargar la publicación');
+        });
+}
+
+// Función para cerrar el modal de edición
+function cerrarEdicion() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+// Cerrar modal al hacer clic fuera del contenido
+window.onclick = function(event) {
+    const modal = document.getElementById('editModal');
+    if (event.target === modal) {
+        cerrarEdicion();
+    }
+}
+</script>
+
 </body>
 </html>

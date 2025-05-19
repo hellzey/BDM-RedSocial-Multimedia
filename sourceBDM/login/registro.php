@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
     <link rel="stylesheet" href="../css/registro.css">
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body>
     <div class="container">

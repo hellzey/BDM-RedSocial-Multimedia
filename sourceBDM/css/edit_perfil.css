@@ -85,3 +85,18 @@ body {
     resize: vertical; /* permite al usuario ajustar el tamaño vertical */
     box-sizing: border-box;
 }
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+

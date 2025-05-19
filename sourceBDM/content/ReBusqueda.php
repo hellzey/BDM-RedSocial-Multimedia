@@ -52,6 +52,7 @@ if ($q !== '') {
     <meta charset="UTF-8">
     <title>Resultados de búsqueda</title>
     <link rel="stylesheet" href="../css/ReBusqueda.css">
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body>
     <?php include 'nav.php'; ?>

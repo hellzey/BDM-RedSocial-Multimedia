@@ -106,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion_seguir']) && is
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguidores de <?php echo htmlspecialchars($nombre_perfil); ?></title>
     <link rel="stylesheet" href="../css/followers.css">
+    <link rel="Icon" href="../media/Freedom_Icono.png">
 </head>
 <body> 
     <?php include 'nav.php'; ?>
@@ -165,6 +166,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion_seguir']) && is
                     <?php endforeach; ?>
                 <?php endif; ?>
             </ul>
+
+            <!-- Generar reporte de seguidores --> 
+            <div class="follow-container">
+            <h3>Reporte de mis seguidores</h3>
+            <form action="../backend/reporte_seguidores.php" method="GET" style="display:inline;">
+            <input type="hidden" name="usuarioID" value="<?php echo $id_perfil; ?>">
+            <button type="submit" class="reporte-btn" name="formato" value="csv">Descargar CSV</button>
+            </form>
+            <form action="../backend/reporte_seguidores.php" method="GET" style="display:inline;">
+            <input type="hidden" name="usuarioID" value="<?php echo $id_perfil; ?>">
+            <button type="submit" class="reporte-btn" name="formato" value="pdf">Descargar PDF</button>
+            </form>
+            </div>
+
         </div> 
     </div>
 
