@@ -9,15 +9,14 @@ if (!isset($_GET['usuarioID'], $_GET['formato'])) {
 $idUsuario = intval($_GET['usuarioID']);
 $formato   = $_GET['formato'];
 
-// 1. Obtener datos
+// 1. Consulta para el correcto funcionamiento de la view en reporte de seguidores
 $sql = "
   SELECT 
-    u.NombreC AS nombre_seguidor,
-    s.fecha_seguimiento
-  FROM Seguidores s
-  INNER JOIN Usuarios u ON s.SeguidorID = u.ID
-  WHERE s.SeguidoID = ?
-  ORDER BY s.fecha_seguimiento DESC
+    nombre_seguidor,
+    fecha_seguimiento
+  FROM Vista_SeguidoresConNombre
+  WHERE SeguidoID = ?
+  ORDER BY fecha_seguimiento DESC
 ";
 
 $stmt = $conn->prepare($sql);

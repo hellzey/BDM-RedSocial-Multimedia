@@ -1,16 +1,14 @@
 <?php
 function obtenerPublicacionesUsuario($conn, $idUsuario) {
-    // Obtenemos información del usuario logueado si existe
     $id_usuario_actual = $_SESSION['id_usuario'] ?? null;
     $logged_in = $id_usuario_actual !== null;
     
-    // Consulta para obtener publicaciones del usuario específico
+    // Consulta usando la VIEW vw_PublicacionesUsuarios
     $sql = "
-        SELECT p.*, u.Nick, u.Foto, u.NombreC, u.ID as usuarioID
-        FROM Publicaciones p
-        INNER JOIN Usuarios u ON p.usuarioID = u.ID
-        WHERE p.usuarioID = ?
-        ORDER BY p.fechacreacion DESC
+        SELECT * 
+        FROM vw_PublicacionesUsuarios
+        WHERE usuarioID = ?
+        ORDER BY fechacreacion DESC
     ";
     
     $stmt = $conn->prepare($sql);
@@ -37,13 +35,12 @@ function obtenerPublicacionesUsuario($conn, $idUsuario) {
                 'comentarios' => []
             ];
             
-            // Obtenemos el multimedia de cada publicación
-            $sqlMultimedia = "SELECT * FROM MultimediaPublicaciones WHERE publiID = ?";
+            // Multimedia igual, no cambia
+            $sqlMultimedia = "SELECT tipo, archivo FROM MultimediaPublicaciones WHERE publiID = ?";
             $stmtMultimedia = $conn->prepare($sqlMultimedia);
             $stmtMultimedia->bind_param("i", $publiID);
             $stmtMultimedia->execute();
             $resultadoMultimedia = $stmtMultimedia->get_result();
-            
             if ($resultadoMultimedia && $resultadoMultimedia->num_rows > 0) {
                 while ($media = $resultadoMultimedia->fetch_assoc()) {
                     $publicacion['multimedia'][] = [
@@ -53,25 +50,30 @@ function obtenerPublicacionesUsuario($conn, $idUsuario) {
                 }
             }
             
-            // Comprobar si el usuario actual dio like (solo si está logueado)
+            // Likes: si usas el trigger y columna likes_count
+            if (isset($row['likes_count'])) {
+                $publicacion['likes'] = (int)$row['likes_count'];
+            } else {
+                // Si NO usas trigger, usa la función fn_contarLikes
+                $sqlLikes = "SELECT fn_contarLikes(?) as totalLikes";
+                $stmtLikes = $conn->prepare($sqlLikes);
+                $stmtLikes->bind_param("i", $publiID);
+                $stmtLikes->execute();
+                $likesRes = $stmtLikes->get_result();
+                $publicacion['likes'] = $likesRes->fetch_assoc()['totalLikes'] ?? 0;
+            }
+            
+            // Comprobar si el usuario actual dio like usando función fn_userLiked
             if ($logged_in) {
-                $sqlUserLike = "SELECT * FROM Reacciones WHERE publiID = ? AND usuarioID = ? AND tipo = 1";
+                $sqlUserLike = "SELECT fn_userLiked(?, ?) as liked";
                 $stmtUserLike = $conn->prepare($sqlUserLike);
                 $stmtUserLike->bind_param("ii", $publiID, $id_usuario_actual);
                 $stmtUserLike->execute();
                 $resUserLike = $stmtUserLike->get_result();
-                $publicacion['userLiked'] = ($resUserLike && $resUserLike->num_rows > 0);
+                $publicacion['userLiked'] = $resUserLike->fetch_assoc()['liked'] ?? false;
             }
             
-            // Contador de "Me gusta"
-            $sqlLikes = "SELECT COUNT(*) as total FROM Reacciones WHERE publiID = ? AND tipo = 1";
-            $stmtLikes = $conn->prepare($sqlLikes);
-            $stmtLikes->bind_param("i", $publiID);
-            $stmtLikes->execute();
-            $likesRes = $stmtLikes->get_result();
-            $publicacion['likes'] = $likesRes->fetch_assoc()['total'] ?? 0;
-            
-            // Obtener comentarios recientes usando los nombres correctos de las columnas
+            // Comentarios igual
             $sqlComentarios = "
                 SELECT c.id_comentario, c.usuarioID, c.comentario, c.fecha_comentario, u.Nick 
                 FROM Comentarios c
@@ -84,7 +86,6 @@ function obtenerPublicacionesUsuario($conn, $idUsuario) {
             $stmtComentarios->bind_param("i", $publiID);
             $stmtComentarios->execute();
             $resComentarios = $stmtComentarios->get_result();
-            
             if ($resComentarios && $resComentarios->num_rows > 0) {
                 while ($coment = $resComentarios->fetch_assoc()) {
                     $publicacion['comentarios'][] = [

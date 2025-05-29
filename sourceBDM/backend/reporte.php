@@ -9,26 +9,16 @@ if (!isset($_GET['usuarioID'], $_GET['formato'])) {
 $idUsuario = intval($_GET['usuarioID']);
 $formato   = $_GET['formato'];
 
-// 1. Obtener datos
+// Consulta para el correcto funcionamiento de la view en reporte de publicaciones
 $sql = "
   SELECT 
-    p.publiID, 
-    p.descripcion, 
-    p.fechacreacion,
-    COALESCE(r.total_reacciones, 0) AS total_reacciones,
-    COALESCE(c.total_comentarios, 0) AS total_comentarios
-  FROM Publicaciones p
-  LEFT JOIN (
-    SELECT publiID, COUNT(*) AS total_reacciones
-    FROM Reacciones
-    GROUP BY publiID
-  ) r ON p.publiID = r.publiID
-  LEFT JOIN (
-    SELECT publiID, COUNT(*) AS total_comentarios
-    FROM Comentarios
-    GROUP BY publiID
-  ) c ON p.publiID = c.publiID
-  WHERE p.usuarioID = ?
+    publiID, 
+    descripcion, 
+    fechacreacion,
+    total_reacciones,
+    total_comentarios
+  FROM Vista_PublicacionesConResumen
+  WHERE usuarioID = ?
   ORDER BY total_reacciones DESC, total_comentarios DESC
 ";
 $stmt = $conn->prepare($sql);
